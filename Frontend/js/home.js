@@ -1,67 +1,67 @@
 const branchContainer =
-document.getElementById(
-    "branchContainer"
-);
+    document.getElementById(
+        "branchContainer"
+    );
 
 const token =
-localStorage.getItem(
-    "token"
-);
+    localStorage.getItem(
+        "token"
+    );
 
 const role =
-localStorage.getItem(
-    "role"
-);
+    localStorage.getItem(
+        "role"
+    );
 
 const adminBadge =
-document.getElementById(
-    "adminBadge"
-);
+    document.getElementById(
+        "adminBadge"
+    );
 
 const customAlert =
-document.getElementById(
-    "customAlert"
-);
+    document.getElementById(
+        "customAlert"
+    );
 
 const branchModal =
-document.getElementById(
-    "branchModal"
-);
+    document.getElementById(
+        "branchModal"
+    );
 
 const deletePopup =
-document.getElementById(
-    "deletePopup"
-);
+    document.getElementById(
+        "deletePopup"
+    );
 
 const branchInput =
-document.getElementById(
-    "branchInput"
-);
+    document.getElementById(
+        "branchInput"
+    );
 
 const modalTitle =
-document.getElementById(
-    "modalTitle"
-);
+    document.getElementById(
+        "modalTitle"
+    );
 
 const saveModal =
-document.getElementById(
-    "saveModal"
-);
+    document.getElementById(
+        "saveModal"
+    );
 
 const cancelModal =
-document.getElementById(
-    "cancelModal"
-);
+    document.getElementById(
+        "cancelModal"
+    );
 
 const confirmDelete =
-document.getElementById(
-    "confirmDelete"
-);
+    document.getElementById(
+        "confirmDelete"
+    );
 
 const cancelDelete =
-document.getElementById(
-    "cancelDelete"
-);
+    document.getElementById(
+        "cancelDelete"
+    );
 
 let editMode = false;
 
@@ -70,30 +70,30 @@ let selectedBranchId = null;
 
 // ADMIN BADGE
 
-if(role === "admin" && adminBadge){
+if (role === "admin" && adminBadge) {
 
     adminBadge.innerText =
-    "(ADMIN)";
+        "(ADMIN)";
 
 }
 
 
 // PROTECT PAGE
 
-if(!token){
+if (!token) {
 
     window.location.href =
-    "login.html";
+        "login.html";
 
 }
 
 
 // CUSTOM ALERT
 
-function showAlert(message){
+function showAlert(message) {
 
     customAlert.innerText =
-    message;
+        message;
 
     customAlert.classList.add(
         "show"
@@ -105,14 +105,14 @@ function showAlert(message){
             "show"
         );
 
-    }, 1200);
+    }, 1000);
 
 }
 
 
 // LOAD BRANCHES
 
-async function loadBranches(){
+async function loadBranches() {
 
     try {
 
@@ -123,10 +123,20 @@ async function loadBranches(){
         );
 
         const branches =
-        await response.json();
+            await response.json();
+
+        // SORT BRANCHES ALPHABETICALLY
+
+        branches.sort((a, b) =>
+
+            a.branchName.localeCompare(
+                b.branchName
+            )
+
+        );
 
         branchContainer.innerHTML =
-        "";
+            "";
 
 
         // SHOW BRANCHES
@@ -134,9 +144,9 @@ async function loadBranches(){
         branches.forEach(branch => {
 
             const branchCard =
-            document.createElement(
-                "div"
-            );
+                document.createElement(
+                    "div"
+                );
 
             branchCard.classList.add(
                 "branch-card"
@@ -151,9 +161,9 @@ async function loadBranches(){
 
                 ${role === "admin"
 
-                ?
+                    ?
 
-                `
+                    `
 
                 <div class="card-actions">
 
@@ -175,7 +185,7 @@ async function loadBranches(){
 
                 `
 
-                : ""}
+                    : ""}
 
             `;
 
@@ -205,7 +215,7 @@ async function loadBranches(){
                     );
 
                     window.location.href =
-                    "subjects.html";
+                        "subjects.html";
 
                 }
 
@@ -214,7 +224,7 @@ async function loadBranches(){
 
             // ADMIN CONTROLS
 
-            if(role === "admin"){
+            if (role === "admin") {
 
                 // EDIT BUTTON
 
@@ -222,25 +232,25 @@ async function loadBranches(){
                     ".edit-btn"
                 )
 
-                .addEventListener(
+                    .addEventListener(
 
-                    "click",
+                        "click",
 
-                    (e) => {
+                        (e) => {
 
-                        e.stopPropagation();
+                            e.stopPropagation();
 
-                        openEditModal(
+                            openEditModal(
 
-                            branch._id,
+                                branch._id,
 
-                            branch.branchName
+                                branch.branchName
 
-                        );
+                            );
 
-                    }
+                        }
 
-                );
+                    );
 
 
                 // DELETE BUTTON
@@ -249,21 +259,21 @@ async function loadBranches(){
                     ".delete-btn"
                 )
 
-                .addEventListener(
+                    .addEventListener(
 
-                    "click",
+                        "click",
 
-                    (e) => {
+                        (e) => {
 
-                        e.stopPropagation();
+                            e.stopPropagation();
 
-                        openDeletePopup(
-                            branch._id
-                        );
+                            openDeletePopup(
+                                branch._id
+                            );
 
-                    }
+                        }
 
-                );
+                    );
 
             }
 
@@ -277,12 +287,12 @@ async function loadBranches(){
 
         // ADMIN ADD CARD
 
-        if(role === "admin"){
+        if (role === "admin") {
 
             const addCard =
-            document.createElement(
-                "div"
-            );
+                document.createElement(
+                    "div"
+                );
 
             addCard.classList.add(
                 "branch-card"
@@ -316,7 +326,7 @@ async function loadBranches(){
                     branchInput.value = "";
 
                     modalTitle.innerText =
-                    "Add Branch";
+                        "Add Branch";
 
                     branchModal.classList.add(
                         "show"
@@ -333,7 +343,7 @@ async function loadBranches(){
 
         }
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
 
@@ -352,18 +362,18 @@ function openEditModal(
 
     oldName
 
-){
+) {
 
     editMode = true;
 
     selectedBranchId =
-    branchId;
+        branchId;
 
     branchInput.value =
-    oldName;
+        oldName;
 
     modalTitle.innerText =
-    "Edit Branch";
+        "Edit Branch";
 
     branchModal.classList.add(
         "show"
@@ -374,10 +384,10 @@ function openEditModal(
 
 // OPEN DELETE POPUP
 
-function openDeletePopup(branchId){
+function openDeletePopup(branchId) {
 
     selectedBranchId =
-    branchId;
+        branchId;
 
     deletePopup.classList.add(
         "show"
@@ -390,207 +400,207 @@ function openDeletePopup(branchId){
 
 saveModal
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    async () => {
+        async () => {
 
-        const branchName =
-        branchInput.value.trim();
+            const branchName =
+                branchInput.value.trim();
 
-        if(!branchName) return;
+            if (!branchName) return;
 
-        try {
+            try {
 
-            let response;
+                let response;
 
 
-            // EDIT BRANCH
+                // EDIT BRANCH
 
-            if(editMode){
+                if (editMode) {
 
-                response = await fetch(
+                    response = await fetch(
 
-                    `http://localhost:5000/api/branches/update/${selectedBranchId}`,
+                        `http://localhost:5000/api/branches/update/${selectedBranchId}`,
 
-                    {
+                        {
 
-                        method: "PUT",
+                            method: "PUT",
 
-                        headers: {
+                            headers: {
 
-                            "Content-Type":
-                            "application/json",
+                                "Content-Type":
+                                    "application/json",
 
-                            Authorization:
-                            `Bearer ${token}`
+                                Authorization:
+                                    `Bearer ${token}`
 
-                        },
+                            },
 
-                        body: JSON.stringify({
+                            body: JSON.stringify({
 
-                            branchName
+                                branchName
 
-                        })
+                            })
 
-                    }
+                        }
 
+                    );
+
+                }
+
+
+                // ADD BRANCH
+
+                else {
+
+                    response = await fetch(
+
+                        "http://localhost:5000/api/branches/add",
+
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                Authorization:
+                                    `Bearer ${token}`
+
+                            },
+
+                            body: JSON.stringify({
+
+                                branchName
+
+                            })
+
+                        }
+
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+                showAlert(
+                    data.message
                 );
 
-            }
-
-
-            // ADD BRANCH
-
-            else {
-
-                response = await fetch(
-
-                    "http://localhost:5000/api/branches/add",
-
-                    {
-
-                        method: "POST",
-
-                        headers: {
-
-                            "Content-Type":
-                            "application/json",
-
-                            Authorization:
-                            `Bearer ${token}`
-
-                        },
-
-                        body: JSON.stringify({
-
-                            branchName
-
-                        })
-
-                    }
-
+                branchModal.classList.remove(
+                    "show"
                 );
 
+                loadBranches();
+
+            } catch (error) {
+
+                console.log(error);
+
             }
-
-
-            const data =
-            await response.json();
-
-            showAlert(
-                data.message
-            );
-
-            branchModal.classList.remove(
-                "show"
-            );
-
-            loadBranches();
-
-        } catch(error){
-
-            console.log(error);
 
         }
 
-    }
-
-);
+    );
 
 
 // CANCEL MODAL
 
 cancelModal
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    () => {
+        () => {
 
-        branchModal.classList.remove(
-            "show"
-        );
+            branchModal.classList.remove(
+                "show"
+            );
 
-    }
+        }
 
-);
+    );
 
 
 // CONFIRM DELETE
 
 confirmDelete
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    async () => {
+        async () => {
 
-        try {
+            try {
 
-            const response = await fetch(
+                const response = await fetch(
 
-                `http://localhost:5000/api/branches/delete/${selectedBranchId}`,
+                    `http://localhost:5000/api/branches/delete/${selectedBranchId}`,
 
-                {
+                    {
 
-                    method: "DELETE",
+                        method: "DELETE",
 
-                    headers: {
+                        headers: {
 
-                        Authorization:
-                        `Bearer ${token}`
+                            Authorization:
+                                `Bearer ${token}`
+
+                        }
 
                     }
 
-                }
+                );
 
-            );
+                const data =
+                    await response.json();
 
-            const data =
-            await response.json();
+                showAlert(
+                    data.message
+                );
 
-            showAlert(
-                data.message
-            );
+                deletePopup.classList.remove(
+                    "show"
+                );
 
-            deletePopup.classList.remove(
-                "show"
-            );
+                loadBranches();
 
-            loadBranches();
+            } catch (error) {
 
-        } catch(error){
+                console.log(error);
 
-            console.log(error);
+            }
 
         }
 
-    }
-
-);
+    );
 
 
 // CANCEL DELETE
 
 cancelDelete
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    () => {
+        () => {
 
-        deletePopup.classList.remove(
-            "show"
-        );
+            deletePopup.classList.remove(
+                "show"
+            );
 
-    }
+        }
 
-);
+    );
 
 
 // LOGOUT
@@ -599,17 +609,17 @@ document.getElementById(
     "logoutbtn"
 )
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    () => {
+        () => {
 
-        localStorage.clear();
+            localStorage.clear();
 
-        window.location.href =
-        "login.html";
+            window.location.href =
+                "login.html";
 
-    }
+        }
 
-);
+    );

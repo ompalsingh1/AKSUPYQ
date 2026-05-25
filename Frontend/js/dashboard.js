@@ -1,7 +1,7 @@
 const userInfo =
-document.getElementById(
-    "userInfo"
-);
+    document.getElementById(
+        "userInfo"
+    );
 
 // const downloadContainer =
 // document.getElementById(
@@ -9,60 +9,60 @@ document.getElementById(
 // );
 
 const username =
-document.getElementById(
-    "username"
-);
+    document.getElementById(
+        "username"
+    );
 
 const token =
-localStorage.getItem(
-    "token"
-);
+    localStorage.getItem(
+        "token"
+    );
 
 const role =
-localStorage.getItem(
-    "role"
-);
+    localStorage.getItem(
+        "role"
+    );
 
 const adminBadge =
-document.getElementById(
-    "adminBadge"
-);
+    document.getElementById(
+        "adminBadge"
+    );
 
 const manageProfiles =
-document.getElementById(
-    "manageProfiles"
-);
+    document.getElementById(
+        "manageProfiles"
+    );
 
 const AdminSection =
-document.getElementById(
-    "AdminSection"
-);
+    document.getElementById(
+        "AdminSection"
+    );
 
 const managementContainer =
-document.getElementById(
-    "managementContainer"
-);
+    document.getElementById(
+        "managementContainer"
+    );
 
 const userSearch =
-document.getElementById(
-    "userSearch"
-);
+    document.getElementById(
+        "userSearch"
+    );
 
 const searchSection =
-document.getElementById(
-    "searchSection"
-);
+    document.getElementById(
+        "searchSection"
+    );
 
-if(searchSection){
+if (searchSection) {
 
     searchSection.style.display =
-    "flex";
+        "flex";
 
 }
-if(role !== "admin" && searchSection){
+if (role !== "admin" && searchSection) {
 
     searchSection.style.display =
-    "none";
+        "none";
 
 }
 
@@ -102,42 +102,42 @@ let currentUserEmail = "";
 
 // PROTECT PAGE
 
-if(!token){
+if (!token) {
 
     window.location.href =
-    "login.html";
+        "login.html";
 
 }
 
 
 // ADMIN UI
 
-if(role === "admin"){
+if (role === "admin") {
 
     // ADMIN BADGE
 
-    if(adminBadge){
+    if (adminBadge) {
 
         adminBadge.innerText =
-        "(ADMIN)";
+            "(ADMIN)";
 
     }
 
     // CHANGE TITLE
 
-    if(manageProfiles){
+    if (manageProfiles) {
 
         manageProfiles.innerText =
-        "Manage Profiles";
+            "Manage Profiles";
 
     }
 
     // HIDE DOWNLOAD HISTORY
 
-    if(AdminSection){
+    if (AdminSection) {
 
         AdminSection.style.display =
-        "none";
+            "none";
 
     }
 
@@ -146,7 +146,7 @@ if(role === "admin"){
 
 // LOAD DASHBOARD
 
-async function loadDashboard(){
+async function loadDashboard() {
 
     try {
 
@@ -159,7 +159,7 @@ async function loadDashboard(){
                 headers: {
 
                     Authorization:
-                    `Bearer ${token}`
+                        `Bearer ${token}`
 
                 }
 
@@ -168,19 +168,19 @@ async function loadDashboard(){
         );
 
         const user =
-        await response.json();
+            await response.json();
 
 
         // USERNAME
 
         username.innerText =
-        user.name;
+            user.name;
 
 
         // STORE EMAIL
 
         currentUserEmail =
-        user.email;
+            user.email;
 
 
         // USER INFO
@@ -199,7 +199,7 @@ async function loadDashboard(){
 
         // USER DOWNLOADS
 
-        if(role !== "admin"){
+        if (role !== "admin") {
 
             loadDownloads(user);
 
@@ -208,13 +208,13 @@ async function loadDashboard(){
 
         // ADMIN USERS
 
-        if(role === "admin"){
+        if (role === "admin") {
 
             loadUsers();
 
         }
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
 
@@ -227,11 +227,11 @@ loadDashboard();
 
 // LOAD DOWNLOADS
 
-function loadDownloads(user){
+function loadDownloads(user) {
 
     downloadContainer.innerHTML = "";
 
-    if(user.downloads.length === 0){
+    if (user.downloads.length === 0) {
 
         downloadContainer.innerHTML = `
 
@@ -251,7 +251,7 @@ function loadDownloads(user){
     user.downloads.forEach(paper => {
 
         const paperCard =
-        document.createElement("div");
+            document.createElement("div");
 
         paperCard.classList.add(
             "download-paper"
@@ -281,7 +281,7 @@ function loadDownloads(user){
 
 // LOAD USERS
 
-async function loadUsers(){
+async function loadUsers() {
 
     try {
 
@@ -294,7 +294,7 @@ async function loadUsers(){
                 headers: {
 
                     Authorization:
-                    `Bearer ${token}`
+                        `Bearer ${token}`
 
                 }
 
@@ -303,13 +303,61 @@ async function loadUsers(){
         );
 
         const users =
-        await response.json();
+            await response.json();
+
+        // CURRENT ADMIN EMAIL
+
+        const currentEmail =
+            currentUserEmail;
+
+
+        // SORT USERS
+
+        users.sort((a, b) => {
+
+            // CURRENT ADMIN FIRST
+
+            if (a.email === currentEmail) {
+
+                return -1;
+
+            }
+
+            if (b.email === currentEmail) {
+
+                return 1;
+
+            }
+
+
+            // OTHER ADMINS SECOND
+
+            if (a.role === "admin" && b.role !== "admin") {
+
+                return -1;
+
+            }
+
+            if (a.role !== "admin" && b.role === "admin") {
+
+                return 1;
+
+            }
+
+
+            // SAME ROLE → SORT BY NAME
+
+            return a.name.localeCompare(
+                b.name
+            );
+
+        });
 
         allUsers = users;
 
         renderUsers(users);
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
 
@@ -320,12 +368,12 @@ async function loadUsers(){
 
 // RENDER USERS
 
-function renderUsers(users){
+function renderUsers(users) {
 
     managementContainer.innerHTML = "";
 
 
-    if(users.length === 0){
+    if (users.length === 0) {
 
         managementContainer.innerHTML = `
 
@@ -345,7 +393,7 @@ function renderUsers(users){
     users.forEach(user => {
 
         const userCard =
-        document.createElement("div");
+            document.createElement("div");
 
         userCard.classList.add(
             "user-card"
@@ -408,11 +456,12 @@ function renderUsers(users){
 
             class="delete-btn"
 
-            ${user.email === currentUserEmail
+            ${user.email === currentUserEmail ||
+                user.email === "singhompal3313@gmail.com"
 
-            ? "disabled"
+                ? "disabled"
 
-            : ""}>
+                : ""}>
 
                 Delete User
 
@@ -424,9 +473,9 @@ function renderUsers(users){
         // CHANGE ROLE
 
         const select =
-        userCard.querySelector(
-            "select"
-        );
+            userCard.querySelector(
+                "select"
+            );
 
         select.addEventListener(
 
@@ -450,19 +499,19 @@ function renderUsers(users){
             ".delete-btn"
         )
 
-        .addEventListener(
+            .addEventListener(
 
-            "click",
+                "click",
 
-            () => {
+                () => {
 
-                deleteUser(
-                    user._id
-                );
+                    deleteUser(
+                        user._id
+                    );
 
-            }
+                }
 
-        );
+            );
 
 
         managementContainer.appendChild(
@@ -476,7 +525,7 @@ function renderUsers(users){
 
 // SEARCH USERS
 
-if(userSearch){
+if (userSearch) {
 
     userSearch.addEventListener(
 
@@ -486,31 +535,31 @@ if(userSearch){
 
             const searchValue =
 
-            userSearch.value
-            .toLowerCase();
+                userSearch.value
+                    .toLowerCase();
 
 
             const filteredUsers =
 
-            allUsers.filter(user =>
+                allUsers.filter(user =>
 
-                user.name
-                .toLowerCase()
+                    user.name
+                        .toLowerCase()
 
-                .includes(searchValue)
+                        .includes(searchValue)
 
-                ||
+                    ||
 
-                user.email
-                .toLowerCase()
+                    user.email
+                        .toLowerCase()
 
-                .includes(searchValue)
+                        .includes(searchValue)
 
-            );
+                );
 
 
             managementContainer.style.opacity =
-            "0";
+                "0";
 
 
             setTimeout(() => {
@@ -520,7 +569,7 @@ if(userSearch){
                 );
 
                 managementContainer.style.opacity =
-                "1";
+                    "1";
 
             }, 150);
 
@@ -533,7 +582,7 @@ if(userSearch){
 
 // CHANGE ROLE
 
-async function changeRole(id, roleValue){
+async function changeRole(id, roleValue) {
 
     try {
 
@@ -548,10 +597,10 @@ async function changeRole(id, roleValue){
                 headers: {
 
                     "Content-Type":
-                    "application/json",
+                        "application/json",
 
                     Authorization:
-                    `Bearer ${token}`
+                        `Bearer ${token}`
 
                 },
 
@@ -566,13 +615,13 @@ async function changeRole(id, roleValue){
         );
 
         const data =
-        await response.json();
+            await response.json();
 
-        alert(data.message);
+        showAlert(data.message);
 
         loadUsers();
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
 
@@ -582,10 +631,10 @@ async function changeRole(id, roleValue){
 
 // DELETE USER
 
-function deleteUser(id){
+function deleteUser(id) {
 
     selectedUserId =
-    id;
+        id;
 
     customPopup.classList.add(
         "show"
@@ -593,10 +642,10 @@ function deleteUser(id){
 
 }
 
-function showAlert(message){
+function showAlert(message) {
 
     customAlert.innerText =
-    message;
+        message;
 
     customAlert.classList.add(
         "show"
@@ -615,74 +664,74 @@ function showAlert(message){
 
 confirmDeleteBtn
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    async () => {
+        async () => {
 
-        try {
+            try {
 
-            const response =
-            await fetch(
+                const response =
+                    await fetch(
 
-                `http://localhost:5000/api/users/delete/${selectedUserId}`,
+                        `http://localhost:5000/api/users/delete/${selectedUserId}`,
 
-                {
+                        {
 
-                    method: "DELETE",
+                            method: "DELETE",
 
-                    headers: {
+                            headers: {
 
-                        Authorization:
-                        `Bearer ${token}`
+                                Authorization:
+                                    `Bearer ${token}`
 
-                    }
+                            }
 
-                }
+                        }
 
-            );
+                    );
 
-            const data =
-            await response.json();
+                const data =
+                    await response.json();
 
-            showAlert(
-                data.message
-            );
+                showAlert(
+                    data.message
+                );
 
-            customPopup.classList.remove(
-                "show"
-            );
+                customPopup.classList.remove(
+                    "show"
+                );
 
-            loadUsers();
+                loadUsers();
 
-        } catch(error){
+            } catch (error) {
 
-            console.log(error);
+                console.log(error);
+
+            }
 
         }
 
-    }
-
-);
+    );
 
 // CANCEL DELETE
 
 cancelDeleteBtn
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    () => {
+        () => {
 
-        customPopup.classList.remove(
-            "show"
-        );
+            customPopup.classList.remove(
+                "show"
+            );
 
-    }
+        }
 
-);
+    );
 
 
 // LOGOUT
@@ -691,17 +740,17 @@ document.getElementById(
     "logoutbtn"
 )
 
-.addEventListener(
+    .addEventListener(
 
-    "click",
+        "click",
 
-    () => {
+        () => {
 
-        localStorage.clear();
+            localStorage.clear();
 
-        window.location.href =
-        "login.html";
+            window.location.href =
+                "login.html";
 
-    }
+        }
 
-);
+    );

@@ -145,6 +145,16 @@ async function loadSubjects(){
         const subjects =
         await response.json();
 
+        // SORT SUBJECTS ALPHABETICALLY
+
+subjects.sort((a, b) =>
+
+    a.subjectName.localeCompare(
+        b.subjectName
+    )
+
+);
+
         subjectContainer.innerHTML =
         "";
 

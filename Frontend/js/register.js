@@ -50,7 +50,7 @@ registerForm.addEventListener("submit", async (e) => {
                     window.location.href =
                         "index.html";
 
-                }, 2000);
+                }, 1000);
 
         } else {
 
@@ -81,6 +81,6 @@ function showAlert(message){
             "show"
         );
 
-    }, 1800);
+    }, 1000);
 
 }

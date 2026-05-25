@@ -71,7 +71,7 @@ loginForm.addEventListener(
                     window.location.href =
                         "index.html";
 
-                }, 2000);
+                }, 1000);
 
             } else {
 
@@ -104,6 +104,6 @@ function showAlert(message) {
             "show"
         );
 
-    }, 500);
+    }, 1000);
 
 }

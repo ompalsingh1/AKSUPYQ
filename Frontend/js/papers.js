@@ -88,6 +88,9 @@ async function loadPapers() {
 
         const papers =
             await response.json();
+        // SORT PAPERS DESCENDING BY YEAR
+
+        papers.sort((a, b) => b.year - a.year);
 
         paperContainer.innerHTML = "";
 
@@ -381,7 +384,7 @@ uploadForm.addEventListener(
             const data =
                 await response.json();
 
-            alert(data.message);
+            showAlert(data.message);
 
             uploadModal.style.display =
                 "none";
@@ -505,7 +508,7 @@ function showAlert(message) {
             "show"
         );
 
-    }, 1200);
+    }, 2000);
 
 }
 

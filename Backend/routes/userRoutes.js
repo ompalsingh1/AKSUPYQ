@@ -2,6 +2,9 @@ const express = require("express");
 
 const User = require("../models/User");
 
+const Query =
+require("../models/Query");
+
 const authMiddleware =
 require("../middleware/authMiddleware");
 
@@ -99,27 +102,44 @@ router.put(
 );
 
 
-// DELETE USER
+// DELETE USER + RELATED DATA
 
 router.delete(
 
     "/delete/:id",
 
     authMiddleware,
+
     adminMiddleware,
 
     async (req, res) => {
 
         try {
 
+            const userId =
+            req.params.id;
+
+
+            // DELETE USER QUERIES
+
+            await Query.deleteMany({
+
+                user: userId
+
+            });
+
+
+            // DELETE USER
+
             await User.findByIdAndDelete(
-                req.params.id
+                userId
             );
+
 
             res.status(200).json({
 
                 message:
-                "User deleted"
+                "User and related data deleted"
 
             });
 

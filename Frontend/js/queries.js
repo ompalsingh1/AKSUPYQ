@@ -59,7 +59,7 @@ function showAlert(message){
             "show"
         );
 
-    }, 1200);
+    }, 1000);
 
 }
 
@@ -129,6 +129,7 @@ document.getElementById("queryForm")
                 document.getElementById(
                     "queryForm"
                 ).reset();
+                loadQueries();
 
             } catch (error) {
 

@@ -1,0 +1,320 @@
+.content{
+
+    padding: 40px;
+
+    min-height: 100vh;
+}
+
+
+/* PAGE TITLE */
+
+.content h1{
+
+    font-size: 40px;
+
+    margin-bottom: 30px;
+
+    color: rgb(0, 0, 0);
+
+    text-align: center;
+}
+
+
+/* QUERY FORM */
+
+.query-form{
+
+    width: 100%;
+
+    max-width: 800px;
+
+    margin: 0 auto 40px auto;
+
+    background: rgba(255,255,255,0.08);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+
+/* TEXTAREA */
+
+.query-form textarea{
+
+    width: 100%;
+
+    height: 180px;
+
+    padding: 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    resize: none;
+
+    outline: none;
+
+    font-size: 16px;
+
+    background: white;
+
+    color: rgb(0, 0, 0);
+
+    margin-bottom: 20px;
+}
+
+.query-form textarea::placeholder{
+
+    color: rgba(255,255,255,0.6);
+}
+
+
+/* BUTTON */
+
+.query-form button{
+
+    padding: 14px 22px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: cyan;
+
+    color: rgb(0, 0, 0);
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+.query-form button:hover{
+
+    transform: scale(1.05);
+
+    background: cyan;
+
+    color: black;
+}
+
+
+/* QUERY CONTAINER */
+
+.query-container{
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 20px;
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+
+/* QUERY CARD */
+
+.query-card{
+
+    background: rgba(255,255,255,0.08);
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+
+    transition: 0.3s;
+}
+
+.query-card:hover{
+
+    transform: translateY(-3px);
+}
+
+
+/* USER NAME */
+
+.query-card h3{
+
+    color: cyan;
+
+    margin-bottom: 10px;
+
+    font-size: 22px;
+}
+
+
+/* EMAIL */
+
+.query-card .email{
+
+    color: rgba(255,255,255,0.7);
+
+    font-size: 14px;
+
+    margin-bottom: 15px;
+}
+
+
+/* MESSAGE */
+
+.query-card .message{
+
+    line-height: 1.7;
+
+    font-size: 16px;
+
+    margin-bottom: 20px;
+}
+
+
+/* DELETE BUTTON */
+
+.delete-query{
+
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: crimson;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.delete-query:hover{
+
+    background: red;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+
+    width: 8px;
+}
+
+::-webkit-scrollbar-track{
+
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background: cyan;
+
+    border-radius: 10px;
+}
+
+/* MOBILE */
+
+@media(max-width: 768px){
+
+    .content{
+
+        padding: 20px;
+    }
+
+    .query-form{
+
+        padding: 20px;
+    }
+
+    .content h1{
+
+        font-size: 32px;
+    }
+
+}
+
+
+.solve-query{
+
+        padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    background: cyan;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.solved-btn{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: fit-content;
+
+    margin: 0 auto 30px;
+
+    padding: 14px 24px;
+
+    border-radius: 14px;
+
+    background: cyan;
+
+    color: black;
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
+
+/* SOLVED */
+
+.solved-query-card{
+
+    border-left: 6px solid cyan;
+    margin-bottom: 20px;
+}
+
+
+/* UNSOLVED */
+
+.unsolved-query-card{
+
+    border-left: 6px solid red;
+    margin-bottom: 20px;
+}

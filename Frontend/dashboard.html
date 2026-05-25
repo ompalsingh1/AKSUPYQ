@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="" alt="" class="logo-image">
+                <span id="logoText" class="logo-text">AKSUPYQ <span id="adminBadge"></span></span>
+            </div>
+            <div class="navs">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="queries.html">Queries</a></li>
+                </ul>
+            </div>
+            <div class="logout">
+                <button id="logoutbtn" class="logoutbtn">Logout</button>
+            </div>
+        </div>
+    </header>
+    <section class="profile">
+
+        <h2>
+            Welcome,
+            <span id="username">User</span>
+        </h2>
+
+        <div id="userInfo" class="dashboard-box">
+
+        </div>
+        <h2 id="manageProfiles"
+class="manage-profiles">
+
+    Your PYQs
+
+</h2>
+
+
+<div id="searchSection" class="search-container">
+
+    <input
+
+        type="text"
+
+        id="userSearch"
+
+        placeholder="Search users by name or email"
+
+    >
+
+</div>
+
+
+<div
+id="managementContainer"
+
+class="management-container">
+
+</div>
+
+<div id="customPopup" class="custom-popup">
+
+        <div class="popup-box">
+
+            <h2>
+                Delete Paper?
+            </h2>
+
+            <p>
+                This action cannot be undone.
+            </p>
+
+            <div class="popup-buttons">
+
+                <button id="cancelDelete" class="cancel-btn">
+
+                    Cancel
+
+                </button>
+
+                <button id="confirmDelete" class="confirm-btn">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="customAlert" class="custom-alert">
+
+    </div>
+
+
+        <script src="js/dashboard.js"></script>
+    </section>
+
+</body>
+
+</html>

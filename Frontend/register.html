@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/global.css">   
+</head>
+
+<body>
+    <!-- <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="../Friendly robot assistant logo.png" alt="" class="logo-image">
+                <span class="logo-text">AKSUPYQ</span>
+            </div>
+        <div class="navs">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        </div>
+    </header> -->
+
+    <div class="auth-container">
+
+        <h2>Welcome</h2>
+        <p>Register your Account</p>
+
+        <form id="registerForm">
+            
+            <div class="input-group">
+                <input type="text" id="name" required placeholder="Name">
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="email" required placeholder="Email">
+            </div>
+
+
+            <div class="input-group">
+                <input type="password" id="password" required placeholder="Password">
+            </div>
+
+            <button type="submit" class="submitbtn">Register</button>
+
+        </form>
+
+        <p class="switch">
+            Already have an account?
+            <a href="login.html">Login</a>
+        </p>
+    </div>
+
+    <div id="customAlert" class="custom-alert">
+
+    </div>
+<script src="js/register.js"></script>
+</body>
+
+</html>

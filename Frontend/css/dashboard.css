@@ -1,0 +1,487 @@
+/* =========================
+   DASHBOARD PAGE
+========================= */
+
+.content{
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding: 50px;
+}
+
+
+/* =========================
+   PROFILE SECTION
+========================= */
+
+.profile{
+
+    width: 100%;
+
+    max-width: 1300px;
+
+    margin: auto;
+}
+
+
+/* =========================
+   WELCOME TEXT
+========================= */
+
+.profile h2{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: auto;
+
+    font-size: 46px;
+
+    font-weight: 700;
+
+    color: black;
+
+    margin-bottom: 40px;
+
+    margin-top: 25px;
+
+    letter-spacing: 1px;
+}
+
+.profile h2 span{
+
+    color: cyan;
+}
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+.manage-profiles{
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin: 50px 0 35px 0;
+
+    font-size: 36px;
+
+    font-weight: 700;
+
+    color: black;
+
+    letter-spacing: 1px;
+
+    position: relative;
+}
+
+
+/* UNDERLINE */
+
+.manage-profiles::after{
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -10px;
+
+    transform: translateX(-50%);
+
+    width: 90px;
+
+    height: 4px;
+
+    background: cyan;
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   USER INFO BOX
+========================= */
+
+.dashboard-box{
+
+    width: 100%;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(0,0,0,0.08);
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,0.15);
+
+    margin-bottom: 50px;
+
+    transition: 0.3s ease;
+}
+
+.dashboard-box:hover{
+
+    transform: translateY(-5px);
+}
+
+
+/* USER DETAILS */
+
+.dashboard-box p{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 18px;
+
+    color: black;
+
+    margin: 18px 0;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   DOWNLOAD GRID
+========================= */
+
+.branch-container{
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 25px;
+}
+
+
+
+
+/* =========================
+   MANAGEMENT CONTAINER
+========================= */
+
+.management-container{
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 30px auto 10px auto;
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit, 320px);
+
+    justify-content: center;
+
+    gap: 30px;
+}
+
+
+/* =========================
+   USER CARD
+========================= */
+
+.user-card{
+
+    background: black;
+
+    border: 1px solid cyan;
+
+    border-radius: 24px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    transition: 0.35s ease;
+}
+
+.user-card:hover{
+
+    transform: translateY(-8px);
+
+    box-shadow:
+    0 18px 35px rgba(0,255,255,0.15);
+}
+
+
+/* NAME */
+
+.user-card h2{
+
+    color: cyan;
+
+    font-size: 28px;
+
+    margin-bottom: 15px;
+}
+
+
+/* EMAIL */
+
+.user-card p{
+
+    color: white;
+
+    margin-bottom: 20px;
+
+    word-break: break-word;
+}
+
+
+/* ROLE SELECT */
+
+.user-card select{
+
+    width: 100%;
+
+    padding: 14px;
+
+    background: #111;
+
+    border: 1px solid cyan;
+
+    border-radius: 12px;
+
+    color: white;
+
+    margin-bottom: 20px;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+
+/* DELETE BUTTON */
+
+.delete-btn{
+
+    width: 100%;
+
+    padding: 14px;
+
+    background: red;
+
+    border: none;
+
+    border-radius: 12px;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.delete-btn:hover{
+
+    opacity: 0.9;
+
+    transform: scale(1.02);
+}
+
+/* CURRENT ADMIN TAG */
+
+.current-admin{
+
+    display: inline-flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 5px 12px;
+
+    border-radius: 30px;
+
+    background: rgba(0,255,255,0.2);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+/* USER NAME */
+
+.user-name{
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   EMPTY TEXT
+========================= */
+
+.no-download{
+
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: 70px;
+
+    font-size: 20px;
+
+    color: rgba(0,0,0,0.6);
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+
+    width: 8px;
+}
+
+::-webkit-scrollbar-track{
+
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background: cyan;
+
+    border-radius: 10px;
+}
+
+
+/* =========================
+   SEARCH BAR
+========================= */
+
+.search-container{
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-bottom: 40px;
+}
+
+
+.search-container input{
+
+    width: 100%;
+
+    max-width: 500px;
+
+    padding: 18px 22px;
+
+    border-radius: 18px;
+
+    border: 1px solid cyan;
+
+    outline: none;
+
+    font-size: 16px;
+
+    background: rgba(255,255,255,0.12);
+
+    backdrop-filter: blur(14px);
+
+    transition: 0.3s ease;
+}
+
+
+.search-container input:focus{
+
+    border-color: cyan;
+
+    box-shadow:
+    0 0 20px rgba(0,255,255,0.25);
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media(max-width: 768px){
+
+    .content{
+
+        padding: 25px;
+    }
+
+    .profile h2{
+
+        font-size: 34px;
+
+        flex-direction: column;
+    }
+
+    .manage-profiles{
+
+        font-size: 28px;
+    }
+
+    .dashboard-box{
+
+        padding: 25px;
+    }
+
+    .download-paper{
+
+        padding: 22px;
+    }
+
+    .management-container{
+
+        grid-template-columns: 1fr;
+    }
+
+    .user-card{
+
+        width: 100%;
+    }
+
+}

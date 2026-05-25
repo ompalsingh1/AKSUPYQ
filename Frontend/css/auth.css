@@ -1,0 +1,164 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.container {
+    width: 100%;
+    /* max-width: 1200px; */
+    margin-left: 20px;
+}
+
+.navbar {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: auto;
+    top: 0;
+    background: rgba(0, 0, 0);
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    z-index: 1000;
+    /* transform: translateY(-100%); */
+  /* animation: slideDown 1s forwards; */
+}
+@keyframes slideDown {
+  to {
+    transform: translateY(0);
+  }
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    width: 20%;
+    color: #fff;
+}
+
+.container .logo img{
+    width: 40px;
+    height: auto;
+    display: flex;
+    border-radius: 100%;
+}
+.navbar .navs{
+    height: 50px;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: #00ffff;
+    border-radius: 20px;
+    box-shadow: 0 0px 20px rgba(0,255,255);
+    
+}
+
+.login {
+    width: 20%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content{
+    margin-top: 100px;
+}
+
+/* 🔐 Container */
+.auth-container {
+    position: relative;
+    z-index: 2;
+    width: 350px;
+    margin: 150px auto;
+    padding: 40px;
+    border-radius: 15px;
+
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+
+    text-align: center;
+    color: #000000;
+    border: 2px solid rgb(0,255,255);
+}
+
+/* ✍️ Text */
+.auth-container h2 {
+    margin-bottom: 10px;
+    color: aqua;
+}
+
+.auth-container p {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* 🧾 Inputs */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 1px solid #aaa;
+    color: #000000;
+}
+
+ .submitbtn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: aqua;
+}
+
+.submitbtn:hover{
+    /* background: rgb(0,255,255); */
+    transform: scale(1.05);
+}
+
+.submitbtn:active{
+    transform: scale(0.95);
+}
+
+.switch{
+    padding-top: 20px;
+}
+
+.switch a{
+    text-decoration: none;
+    color: aqua;
+}
+

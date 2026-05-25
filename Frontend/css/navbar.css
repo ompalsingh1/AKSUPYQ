@@ -1,0 +1,87 @@
+#adminBadge{
+
+    /* background: cyan; */
+
+    color: cyan;
+
+    padding: 4px 10px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-left: 10px;
+
+    letter-spacing: 1px;
+
+    vertical-align: middle;
+}
+
+.navbar{
+
+    width: 100%;
+
+    background: #222;
+
+    padding: 15px 40px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+}
+
+.navbar .container{
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.logo-text{
+
+    color: cyan;
+
+    font-size: 28px;
+
+    font-weight: bold;
+}
+
+.navs ul{
+
+    display: flex;
+
+    list-style: none;
+
+    gap: 20px;
+}
+
+.navs a{
+
+    color: white;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.navs a:hover{
+    color: cyan;
+}
+
+.logoutbtn{
+
+    background: cyan;
+
+    border: none;
+
+    padding: 10px 18px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}

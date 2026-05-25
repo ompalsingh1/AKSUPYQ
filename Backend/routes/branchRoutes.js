@@ -74,4 +74,91 @@ router.get("/", async (req, res) => {
 
 });
 
+// UPDATE BRANCH
+
+router.put(
+
+    "/update/:id",
+
+    authMiddleware,
+    adminMiddleware,
+
+    async (req, res) => {
+
+        try {
+
+            await Branch.findByIdAndUpdate(
+
+                req.params.id,
+
+                {
+
+                    branchName:
+                    req.body.branchName
+
+                }
+
+            );
+
+            res.status(200).json({
+
+                message:
+                "Branch updated"
+
+            });
+
+        } catch(error){
+
+            res.status(500).json({
+
+                error: error.message
+
+            });
+
+        }
+
+    }
+
+);
+
+
+
+// DELETE BRANCH
+
+router.delete(
+
+    "/delete/:id",
+
+    authMiddleware,
+    adminMiddleware,
+
+    async (req, res) => {
+
+        try {
+
+            await Branch.findByIdAndDelete(
+                req.params.id
+            );
+
+            res.status(200).json({
+
+                message:
+                "Branch deleted"
+
+            });
+
+        } catch(error){
+
+            res.status(500).json({
+
+                error: error.message
+
+            });
+
+        }
+
+    }
+
+);
+
 module.exports = router;

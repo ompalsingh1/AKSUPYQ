@@ -37,10 +37,6 @@
 .branch-card:hover{
 
     transform: translateY(-5px);
-
-    background: cyan;
-
-    color: black;
 }
 
 .add-icon{

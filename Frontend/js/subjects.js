@@ -1,21 +1,84 @@
 const subjectContainer =
-document.getElementById("subjectContainer");
+document.getElementById(
+    "subjectContainer"
+);
 
 const branchId =
-localStorage.getItem("branchId");
+localStorage.getItem(
+    "branchId"
+);
 
 const branchName =
-localStorage.getItem("branchName");
+localStorage.getItem(
+    "branchName"
+);
 
 const token =
-localStorage.getItem("token");
-
+localStorage.getItem(
+    "token"
+);
 
 const role =
-localStorage.getItem("role");
+localStorage.getItem(
+    "role"
+);
 
 const adminBadge =
-document.getElementById("adminBadge");
+document.getElementById(
+    "adminBadge"
+);
+
+const customAlert =
+document.getElementById(
+    "customAlert"
+);
+
+const subjectModal =
+document.getElementById(
+    "subjectModal"
+);
+
+const deletePopup =
+document.getElementById(
+    "deletePopup"
+);
+
+const subjectInput =
+document.getElementById(
+    "subjectInput"
+);
+
+const modalTitle =
+document.getElementById(
+    "modalTitle"
+);
+
+const saveModal =
+document.getElementById(
+    "saveModal"
+);
+
+const cancelModal =
+document.getElementById(
+    "cancelModal"
+);
+
+const confirmDelete =
+document.getElementById(
+    "confirmDelete"
+);
+
+const cancelDelete =
+document.getElementById(
+    "cancelDelete"
+);
+
+let editMode = false;
+
+let selectedSubjectId = null;
+
+
+// ADMIN BADGE
 
 if(role === "admin" && adminBadge){
 
@@ -29,15 +92,42 @@ if(role === "admin" && adminBadge){
 
 if(!token){
 
-    window.location.href = "login.html";
+    window.location.href =
+    "login.html";
 
 }
 
 
-// SHOW BRANCH TITLE
+// SHOW TITLE
 
-document.getElementById("branchTitle")
-.innerText = `${branchName} Subjects`;
+document.getElementById(
+    "branchTitle"
+)
+
+.innerText =
+`${branchName} Subjects`;
+
+
+// CUSTOM ALERT
+
+function showAlert(message){
+
+    customAlert.innerText =
+    message;
+
+    customAlert.classList.add(
+        "show"
+    );
+
+    setTimeout(() => {
+
+        customAlert.classList.remove(
+            "show"
+        );
+
+    }, 1200);
+
+}
 
 
 // LOAD SUBJECTS
@@ -55,18 +145,23 @@ async function loadSubjects(){
         const subjects =
         await response.json();
 
-        subjectContainer.innerHTML = "";
+        subjectContainer.innerHTML =
+        "";
+
 
         // SHOW SUBJECTS
 
         subjects.forEach(subject => {
 
             const subjectCard =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
             subjectCard.classList.add(
                 "branch-card"
             );
+
 
             subjectCard.innerHTML = `
 
@@ -74,26 +169,124 @@ async function loadSubjects(){
                     ${subject.subjectName}
                 </h3>
 
+                ${role === "admin"
+
+                ?
+
+                `
+
+                <div class="card-actions">
+
+                    <button
+                    class="edit-btn">
+
+                        Edit
+
+                    </button>
+
+                    <button
+                    class="delete-btn">
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+                `
+
+                : ""}
+
             `;
 
-            // CLICK SUBJECT
 
-            subjectCard.addEventListener("click", () => {
+            // OPEN PAPERS PAGE
 
-                localStorage.setItem(
-                    "subjectId",
-                    subject._id
+            subjectCard.addEventListener(
+
+                "click",
+
+                () => {
+
+                    localStorage.setItem(
+
+                        "subjectId",
+
+                        subject._id
+
+                    );
+
+                    localStorage.setItem(
+
+                        "subjectName",
+
+                        subject.subjectName
+
+                    );
+
+                    window.location.href =
+                    "papers.html";
+
+                }
+
+            );
+
+
+            // ADMIN CONTROLS
+
+            if(role === "admin"){
+
+                // EDIT
+
+                subjectCard.querySelector(
+                    ".edit-btn"
+                )
+
+                .addEventListener(
+
+                    "click",
+
+                    (e) => {
+
+                        e.stopPropagation();
+
+                        openEditModal(
+
+                            subject._id,
+
+                            subject.subjectName
+
+                        );
+
+                    }
+
                 );
 
-                localStorage.setItem(
-                    "subjectName",
-                    subject.subjectName
+
+                // DELETE
+
+                subjectCard.querySelector(
+                    ".delete-btn"
+                )
+
+                .addEventListener(
+
+                    "click",
+
+                    (e) => {
+
+                        e.stopPropagation();
+
+                        openDeletePopup(
+                            subject._id
+                        );
+
+                    }
+
                 );
 
-                window.location.href =
-                "papers.html";
+            }
 
-            });
 
             subjectContainer.appendChild(
                 subjectCard
@@ -102,12 +295,14 @@ async function loadSubjects(){
         });
 
 
-        // ADMIN ADD SUBJECT CARD
+        // ADMIN ADD CARD
 
         if(role === "admin"){
 
             const addCard =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
             addCard.classList.add(
                 "branch-card"
@@ -116,25 +311,41 @@ async function loadSubjects(){
             addCard.innerHTML = `
 
                 <div class="add-icon">
+
                     +
+
                 </div>
 
-                <p>Add Subject</p>
+                <p>
+
+                    Add Subject
+
+                </p>
 
             `;
 
-            addCard.addEventListener("click", () => {
 
-                const subjectName =
-                prompt("Enter Subject Name");
+            addCard.addEventListener(
 
-                if(subjectName){
+                "click",
 
-                    addSubject(subjectName);
+                () => {
+
+                    editMode = false;
+
+                    subjectInput.value = "";
+
+                    modalTitle.innerText =
+                    "Add Subject";
+
+                    subjectModal.classList.add(
+                        "show"
+                    );
 
                 }
 
-            });
+            );
+
 
             subjectContainer.appendChild(
                 addCard
@@ -153,65 +364,274 @@ async function loadSubjects(){
 loadSubjects();
 
 
-// ADD SUBJECT
+// OPEN EDIT MODAL
 
-async function addSubject(subjectName){
+function openEditModal(
 
-    try {
+    subjectId,
 
-        const response = await fetch(
+    oldName
 
-            "http://localhost:5000/api/subjects/add",
+){
 
-            {
+    editMode = true;
 
-                method: "POST",
+    selectedSubjectId =
+    subjectId;
 
-                headers: {
+    subjectInput.value =
+    oldName;
 
-                    "Content-Type":
-                    "application/json",
+    modalTitle.innerText =
+    "Edit Subject";
 
-                    Authorization: token
-
-                },
-
-                body: JSON.stringify({
-
-                    subjectName,
-                    branchId
-
-                })
-
-            }
-
-        );
-
-        const data =
-        await response.json();
-
-        alert(data.message);
-
-        loadSubjects();
-
-    } catch(error){
-
-        console.log(error);
-
-    }
+    subjectModal.classList.add(
+        "show"
+    );
 
 }
 
 
+// OPEN DELETE POPUP
+
+function openDeletePopup(subjectId){
+
+    selectedSubjectId =
+    subjectId;
+
+    deletePopup.classList.add(
+        "show"
+    );
+
+}
+
+
+// SAVE SUBJECT
+
+saveModal
+
+.addEventListener(
+
+    "click",
+
+    async () => {
+
+        const subjectName =
+        subjectInput.value.trim();
+
+        if(!subjectName) return;
+
+        try {
+
+            let response;
+
+
+            // EDIT SUBJECT
+
+            if(editMode){
+
+                response = await fetch(
+
+                    `http://localhost:5000/api/subjects/update/${selectedSubjectId}`,
+
+                    {
+
+                        method: "PUT",
+
+                        headers: {
+
+                            "Content-Type":
+                            "application/json",
+
+                            Authorization:
+                            `Bearer ${token}`
+
+                        },
+
+                        body: JSON.stringify({
+
+                            subjectName
+
+                        })
+
+                    }
+
+                );
+
+            }
+
+
+            // ADD SUBJECT
+
+            else {
+
+                response = await fetch(
+
+                    "http://localhost:5000/api/subjects/add",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                            "application/json",
+
+                            Authorization:
+                            `Bearer ${token}`
+
+                        },
+
+                        body: JSON.stringify({
+
+                            subjectName,
+
+                            branchId
+
+                        })
+
+                    }
+
+                );
+
+            }
+
+
+            const data =
+            await response.json();
+
+            showAlert(
+                data.message
+            );
+
+            subjectModal.classList.remove(
+                "show"
+            );
+
+            loadSubjects();
+
+        } catch(error){
+
+            console.log(error);
+
+        }
+
+    }
+
+);
+
+
+// CANCEL MODAL
+
+cancelModal
+
+.addEventListener(
+
+    "click",
+
+    () => {
+
+        subjectModal.classList.remove(
+            "show"
+        );
+
+    }
+
+);
+
+
+// CONFIRM DELETE
+
+confirmDelete
+
+.addEventListener(
+
+    "click",
+
+    async () => {
+
+        try {
+
+            const response = await fetch(
+
+                `http://localhost:5000/api/subjects/delete/${selectedSubjectId}`,
+
+                {
+
+                    method: "DELETE",
+
+                    headers: {
+
+                        Authorization:
+                        `Bearer ${token}`
+
+                    }
+
+                }
+
+            );
+
+            const data =
+            await response.json();
+
+            showAlert(
+                data.message
+            );
+
+            deletePopup.classList.remove(
+                "show"
+            );
+
+            loadSubjects();
+
+        } catch(error){
+
+            console.log(error);
+
+        }
+
+    }
+
+);
+
+
+// CANCEL DELETE
+
+cancelDelete
+
+.addEventListener(
+
+    "click",
+
+    () => {
+
+        deletePopup.classList.remove(
+            "show"
+        );
+
+    }
+
+);
+
+
 // LOGOUT
 
-document.getElementById("logoutbtn")
+document.getElementById(
+    "logoutbtn"
+)
 
-.addEventListener("click", () => {
+.addEventListener(
 
-    localStorage.clear();
+    "click",
 
-    window.location.href =
-    "login.html";
+    () => {
 
-});
+        localStorage.clear();
+
+        window.location.href =
+        "login.html";
+
+    }
+
+);

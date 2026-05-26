@@ -85,3 +85,40 @@
 
     cursor: pointer;
 }
+
+@media(max-width: 768px){
+
+    .container{
+
+        flex-direction: column;
+
+        gap: 18px;
+
+        padding: 14px;
+    }
+
+    .logo{
+
+        justify-content: center;
+    }
+
+    .navs ul{
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 14px;
+    }
+
+    .logout{
+
+        width: 100%;
+    }
+
+    .logoutbtn{
+
+        width: 100%;
+    }
+
+}

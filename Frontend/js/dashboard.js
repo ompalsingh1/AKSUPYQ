@@ -3,10 +3,6 @@ const userInfo =
         "userInfo"
     );
 
-// const downloadContainer =
-// document.getElementById(
-//     "downloadContainer"
-// );
 
 const username =
     document.getElementById(
@@ -196,16 +192,6 @@ async function loadDashboard() {
 
         `;
 
-
-        // USER DOWNLOADS
-
-        if (role !== "admin") {
-
-            loadDownloads(user);
-
-        }
-
-
         // ADMIN USERS
 
         if (role === "admin") {
@@ -224,59 +210,6 @@ async function loadDashboard() {
 
 loadDashboard();
 
-
-// LOAD DOWNLOADS
-
-function loadDownloads(user) {
-
-    downloadContainer.innerHTML = "";
-
-    if (user.downloads.length === 0) {
-
-        downloadContainer.innerHTML = `
-
-            <p class="no-download">
-
-                No downloads yet
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    user.downloads.forEach(paper => {
-
-        const paperCard =
-            document.createElement("div");
-
-        paperCard.classList.add(
-            "download-paper"
-        );
-
-        paperCard.innerHTML = `
-
-            <h3>
-                ${paper.paperName}
-            </h3>
-
-            <p>
-                Year:
-                ${paper.year}
-            </p>
-
-        `;
-
-        downloadContainer.appendChild(
-            paperCard
-        );
-
-    });
-
-}
 
 
 // LOAD USERS

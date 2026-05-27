@@ -385,3 +385,249 @@ body{
 
     color: rgba(255,255,255,0.5);
 }
+
+/* =========================
+   BRANCH GRID
+========================= */
+
+
+
+
+
+.branch-container{
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+    repeat(auto-fit, 280px);
+
+    justify-content: center;
+
+    gap: 30px;
+}
+
+
+/* =========================
+   BRANCH CARD
+========================= */
+
+.branch-card{
+
+    position: relative;
+
+    width: 280px;
+
+    height: 220px;
+
+    background: black;
+
+    border: 1px solid cyan;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    backdrop-filter: blur(14px);
+
+    transition: 0.35s ease;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,0.25);
+}
+
+
+/* GLOW EFFECT */
+
+.branch-card::before{
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    background: rgba(0,255,255,0.08);
+
+    border-radius: 50%;
+
+    top: -60px;
+
+    right: -60px;
+}
+
+
+/* HOVER */
+
+.branch-card:hover{
+
+    transform: translateY(-8px);
+
+    border-color: rgba(0,255,255,0.4);
+
+    box-shadow:
+    0 18px 35px rgba(0,0,0,0.35);
+}
+
+
+/* =========================
+   BRANCH NAME
+========================= */
+
+.branch-card h3{
+
+    position: relative;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    color: cyan;
+
+    z-index: 2;
+}
+
+
+/* =========================
+   ADD CARD ICON
+========================= */
+
+.add-icon{
+
+    position: relative;
+
+    font-size: 65px;
+
+    font-weight: 700;
+
+    color: cyan;
+
+    margin-bottom: 15px;
+
+    z-index: 2;
+}
+
+
+/* ADD CARD TEXT */
+
+.branch-card p{
+
+    position: relative;
+
+    font-size: 18px;
+
+    color: rgba(255,255,255,0.75);
+
+    z-index: 2;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media(max-width: 768px){
+
+    .branch-container{
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+
+    .branch-card{
+
+        width: 100%;
+
+        max-width: 320px;
+
+        height: 200px;
+    }
+
+
+    .branch-card h3{
+
+        font-size: 24px;
+    }
+
+
+    .branch-card p{
+
+        font-size: 16px;
+    }
+
+
+    .add-icon{
+
+        font-size: 55px;
+    }
+
+
+    .popup-box{
+
+        width: 95%;
+
+        padding: 24px;
+    }
+
+
+    .popup-buttons{
+
+        flex-direction: column;
+    }
+
+
+    .card-actions{
+
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+
+    .card-actions button{
+
+        width: 100%;
+    }
+
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+
+    width: 8px;
+}
+
+::-webkit-scrollbar-track{
+
+    background: #111;
+}
+
+::-webkit-scrollbar-thumb{
+
+    background: cyan;
+
+    border-radius: 10px;
+}

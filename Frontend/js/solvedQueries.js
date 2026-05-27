@@ -22,7 +22,7 @@ async function loadSolvedQueries(){
 
         const response = await fetch(
 
-            "http://localhost:5000/api/queries/all",
+            "https://aksupyq-backend.onrender.com/api/queries/all",
 
             {
 

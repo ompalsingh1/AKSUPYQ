@@ -138,7 +138,7 @@ async function loadSubjects(){
 
         const response = await fetch(
 
-            `http://localhost:5000/api/subjects/${branchId}`
+            `https://aksupyq-backend.onrender.com/api/subjects/${branchId}`
 
         );
 
@@ -442,7 +442,7 @@ saveModal
 
                 response = await fetch(
 
-                    `http://localhost:5000/api/subjects/update/${selectedSubjectId}`,
+                    `https://aksupyq-backend.onrender.com/api/subjects/update/${selectedSubjectId}`,
 
                     {
 
@@ -477,7 +477,7 @@ saveModal
 
                 response = await fetch(
 
-                    "http://localhost:5000/api/subjects/add",
+                    "https://aksupyq-backend.onrender.com/api/subjects/add",
 
                     {
 
@@ -565,7 +565,7 @@ confirmDelete
 
             const response = await fetch(
 
-                `http://localhost:5000/api/subjects/delete/${selectedSubjectId}`,
+                `https://aksupyq-backend.onrender.com/api/subjects/delete/${selectedSubjectId}`,
 
                 {
 

@@ -19,7 +19,7 @@ registerForm.addEventListener("submit", async (e) => {
 
         const response = await fetch(
 
-            "http://localhost:5000/api/auth/register",
+            "https://aksupyq-backend.onrender.com/api/auth/register",
 
             {
 

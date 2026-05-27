@@ -82,7 +82,7 @@ async function loadPapers() {
 
         const response = await fetch(
 
-            `http://localhost:5000/api/papers/${subjectId}`
+            `https://aksupyq-backend.onrender.com/api/papers/${subjectId}`
 
         );
 
@@ -164,7 +164,7 @@ async function loadPapers() {
 
                         const response = await fetch(
 
-                            `http://localhost:5000/api/papers/download/${paper._id}`,
+                            `https://aksupyq-backend.onrender.com/api/papers/download/${paper._id}`,
 
                             {
 
@@ -364,7 +364,7 @@ uploadForm.addEventListener(
 
             const response = await fetch(
 
-                "http://localhost:5000/api/papers/upload",
+                "https://aksupyq-backend.onrender.com/api/papers/upload",
 
                 {
 
@@ -434,7 +434,7 @@ confirmDeleteBtn
                 const response =
                     await fetch(
 
-                        `http://localhost:5000/api/papers/delete/${selectedPaperId}`,
+                        `https://aksupyq-backend.onrender.com/api/papers/delete/${selectedPaperId}`,
 
                         {
 

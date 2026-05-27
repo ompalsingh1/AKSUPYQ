@@ -148,7 +148,7 @@ async function loadDashboard() {
 
         const response = await fetch(
 
-            "http://localhost:5000/api/dashboard/user",
+            "https://aksupyq-backend.onrender.com/api/dashboard/user",
 
             {
 
@@ -220,7 +220,7 @@ async function loadUsers() {
 
         const response = await fetch(
 
-            "http://localhost:5000/api/users",
+            "https://aksupyq-backend.onrender.com/api/users",
 
             {
 
@@ -521,7 +521,7 @@ async function changeRole(id, roleValue) {
 
         const response = await fetch(
 
-            `http://localhost:5000/api/users/role/${id}`,
+            `https://aksupyq-backend.onrender.com/api/users/role/${id}`,
 
             {
 
@@ -608,7 +608,7 @@ confirmDeleteBtn
                 const response =
                     await fetch(
 
-                        `http://localhost:5000/api/users/delete/${selectedUserId}`,
+                        `https://aksupyq-backend.onrender.com/api/users/delete/${selectedUserId}`,
 
                         {
 

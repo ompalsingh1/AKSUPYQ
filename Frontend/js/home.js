@@ -118,7 +118,7 @@ async function loadBranches() {
 
         const response = await fetch(
 
-            "http://localhost:5000/api/branches"
+            "https://aksupyq-backend.onrender.com/api/branches"
 
         );
 
@@ -422,7 +422,7 @@ saveModal
 
                     response = await fetch(
 
-                        `http://localhost:5000/api/branches/update/${selectedBranchId}`,
+                        `https://aksupyq-backend.onrender.com/api/branches/update/${selectedBranchId}`,
 
                         {
 
@@ -457,7 +457,7 @@ saveModal
 
                     response = await fetch(
 
-                        "http://localhost:5000/api/branches/add",
+                        "https://aksupyq-backend.onrender.com/api/branches/add",
 
                         {
 
@@ -543,7 +543,7 @@ confirmDelete
 
                 const response = await fetch(
 
-                    `http://localhost:5000/api/branches/delete/${selectedBranchId}`,
+                    `https://aksupyq-backend.onrender.com/api/branches/delete/${selectedBranchId}`,
 
                     {
 

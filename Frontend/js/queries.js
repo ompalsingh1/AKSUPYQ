@@ -97,7 +97,7 @@ document.getElementById("queryForm")
 
                 const response = await fetch(
 
-                    "http://localhost:5000/api/queries/send",
+                    "https://aksupyq-backend.onrender.com/api/queries/send",
 
                     {
 
@@ -156,7 +156,7 @@ async function loadQueries() {
         if(role === "admin"){
 
             apiUrl =
-            "http://localhost:5000/api/queries/all";
+            "https://aksupyq-backend.onrender.com/api/queries/all";
 
         }
 
@@ -165,7 +165,7 @@ async function loadQueries() {
         else {
 
             apiUrl =
-            "http://localhost:5000/api/queries/myqueries";
+            "https://aksupyq-backend.onrender.com/api/queries/myqueries";
 
         }
 
@@ -381,7 +381,7 @@ async function deleteQuery(queryId) {
 
         const response = await fetch(
 
-            `http://localhost:5000/api/queries/delete/${queryId}`,
+            `https://aksupyq-backend.onrender.com/api/queries/delete/${queryId}`,
 
             {
 
@@ -419,7 +419,7 @@ async function solveQuery(queryId){
 
         const response = await fetch(
 
-            `http://localhost:5000/api/queries/solve/${queryId}`,
+            `https://aksupyq-backend.onrender.com/api/queries/solve/${queryId}`,
 
             {
 

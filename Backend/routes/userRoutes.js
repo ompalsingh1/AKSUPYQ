@@ -1,20 +1,32 @@
 const express = require("express");
 
-const User = require("../models/User");
+const User =
+    require("../models/User");
 
 const Query =
-require("../models/Query");
+    require("../models/Query");
 
 const authMiddleware =
-require("../middleware/authMiddleware");
+    require("../middleware/authMiddleware");
 
 const adminMiddleware =
-require("../middleware/adminMiddleware");
+    require("../middleware/adminMiddleware");
 
-const router = express.Router();
+const router =
+    express.Router();
 
 
+// =========================
+// PROTECTED ADMIN
+// =========================
+
+const PROTECTED_ADMIN =
+    "singhompal3313@gmail.com";
+
+
+// =========================
 // GET ALL USERS
+// =========================
 
 router.get(
 
@@ -28,18 +40,19 @@ router.get(
         try {
 
             const users =
-            await User.find()
-            .select("-password");
+                await User.find()
+                    .select("-password");
 
             res.status(200).json(
                 users
             );
 
-        } catch(error){
+        } catch (error) {
 
             res.status(500).json({
 
-                error: error.message
+                error:
+                    error.message
 
             });
 
@@ -50,7 +63,9 @@ router.get(
 );
 
 
+// =========================
 // CHANGE ROLE
+// =========================
 
 router.put(
 
@@ -63,35 +78,60 @@ router.put(
 
         try {
 
-            const updatedUser =
-            await User.findByIdAndUpdate(
+            const user =
+                await User.findById(
+                    req.params.id
+                );
 
-                req.params.id,
+            // USER NOT FOUND
 
-                {
-                    role: req.body.role
-                },
+            if (!user) {
 
-                {
-                    new: true
-                }
+                return res.status(404).json({
 
-            );
+                    message:
+                        "User not found"
+
+                });
+
+            }
+
+            // PROTECTED ADMIN
+
+            if (user.email === PROTECTED_ADMIN) {
+
+                return res.status(403).json({
+
+                    message:
+                        "This admin role cannot be changed"
+
+                });
+
+            }
+
+            // UPDATE ROLE
+
+            user.role =
+                req.body.role;
+
+            await user.save();
 
             res.status(200).json({
 
                 message:
-                "Role updated",
+                    "Role updated successfully",
 
-                updatedUser
+                updatedUser:
+                    user
 
             });
 
-        } catch(error){
+        } catch (error) {
 
             res.status(500).json({
 
-                error: error.message
+                error:
+                    error.message
 
             });
 
@@ -102,14 +142,15 @@ router.put(
 );
 
 
+// =========================
 // DELETE USER + RELATED DATA
+// =========================
 
 router.delete(
 
     "/delete/:id",
 
     authMiddleware,
-
     adminMiddleware,
 
     async (req, res) => {
@@ -117,8 +158,38 @@ router.delete(
         try {
 
             const userId =
-            req.params.id;
+                req.params.id;
 
+            const user =
+                await User.findById(
+                    userId
+                );
+
+            // USER NOT FOUND
+
+            if (!user) {
+
+                return res.status(404).json({
+
+                    message:
+                        "User not found"
+
+                });
+
+            }
+
+            // PROTECTED ADMIN
+
+            if (user.email === PROTECTED_ADMIN) {
+
+                return res.status(403).json({
+
+                    message:
+                        "This admin cannot be deleted"
+
+                });
+
+            }
 
             // DELETE USER QUERIES
 
@@ -128,26 +199,25 @@ router.delete(
 
             });
 
-
             // DELETE USER
 
             await User.findByIdAndDelete(
                 userId
             );
 
-
             res.status(200).json({
 
                 message:
-                "User and related data deleted"
+                    "User and related data deleted"
 
             });
 
-        } catch(error){
+        } catch (error) {
 
             res.status(500).json({
 
-                error: error.message
+                error:
+                    error.message
 
             });
 

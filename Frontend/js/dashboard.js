@@ -1,102 +1,77 @@
-const userInfo =
-    document.getElementById(
-        "userInfo"
-    );
+// =========================
+// ELEMENTS
+// =========================
 
+const userInfo =
+    document.getElementById("userInfo");
 
 const username =
-    document.getElementById(
-        "username"
-    );
-
-const token =
-    localStorage.getItem(
-        "token"
-    );
-
-const role =
-    localStorage.getItem(
-        "role"
-    );
+    document.getElementById("username");
 
 const adminBadge =
-    document.getElementById(
-        "adminBadge"
-    );
+    document.getElementById("adminBadge");
 
 const manageProfiles =
-    document.getElementById(
-        "manageProfiles"
-    );
+    document.getElementById("manageProfiles");
 
 const AdminSection =
-    document.getElementById(
-        "AdminSection"
-    );
+    document.getElementById("AdminSection");
 
 const managementContainer =
-    document.getElementById(
-        "managementContainer"
-    );
+    document.getElementById("managementContainer");
 
 const userSearch =
-    document.getElementById(
-        "userSearch"
-    );
+    document.getElementById("userSearch");
 
 const searchSection =
-    document.getElementById(
-        "searchSection"
-    );
-
-if (searchSection) {
-
-    searchSection.style.display =
-        "flex";
-
-}
-if (role !== "admin" && searchSection) {
-
-    searchSection.style.display =
-        "none";
-
-}
+    document.getElementById("searchSection");
 
 const customPopup =
-    document.getElementById(
-        "customPopup"
-    );
+    document.getElementById("customPopup");
 
 const confirmDeleteBtn =
-    document.getElementById(
-        "confirmDelete"
-    );
+    document.getElementById("confirmDelete");
 
 const cancelDeleteBtn =
-    document.getElementById(
-        "cancelDelete"
-    );
+    document.getElementById("cancelDelete");
 
 const customAlert =
-    document.getElementById(
-        "customAlert"
-    );
+    document.getElementById("customAlert");
 
 
-let selectedPaperId = null;
+// =========================
+// STORAGE
+// =========================
+
+const token =
+    localStorage.getItem("token");
+
+const role =
+    localStorage.getItem("role");
 
 
-// STORE USERS
+// =========================
+// CONSTANTS
+// =========================
+
+const PROTECTED_ADMIN =
+    "singhompal3313@gmail.com";
+
+
+// =========================
+// VARIABLES
+// =========================
 
 let allUsers = [];
 
-
-// CURRENT USER EMAIL
-
 let currentUserEmail = "";
 
+let selectedUserId = null;
 
+
+// =========================
 // PROTECT PAGE
+// =========================
 
 if (!token) {
 
@@ -106,11 +81,25 @@ if (!token) {
 }
 
 
+// =========================
+// SEARCH SECTION
+// =========================
+
+if (searchSection) {
+
+    searchSection.style.display =
+        role === "admin"
+            ? "flex"
+            : "none";
+
+}
+
+
+// =========================
 // ADMIN UI
+// =========================
 
 if (role === "admin") {
-
-    // ADMIN BADGE
 
     if (adminBadge) {
 
@@ -119,16 +108,12 @@ if (role === "admin") {
 
     }
 
-    // CHANGE TITLE
-
     if (manageProfiles) {
 
         manageProfiles.innerText =
             "Manage Profiles";
 
     }
-
-    // HIDE DOWNLOAD HISTORY
 
     if (AdminSection) {
 
@@ -140,59 +125,48 @@ if (role === "admin") {
 }
 
 
+// =========================
 // LOAD DASHBOARD
+// =========================
 
 async function loadDashboard() {
 
     try {
 
-        const response = await fetch(
+        const response =
+            await fetch(
 
-            "https://aksupyq-backend.onrender.com/api/dashboard/user",
+                "https://aksupyq-backend.onrender.com/api/dashboard/user",
 
-            {
+                {
 
-                headers: {
+                    headers: {
 
-                    Authorization:
-                        `Bearer ${token}`
+                        Authorization:
+                            `Bearer ${token}`
+
+                    }
 
                 }
 
-            }
-
-        );
+            );
 
         const user =
             await response.json();
 
-
-        // USERNAME
-
         username.innerText =
             user.name;
-
-
-        // STORE EMAIL
 
         currentUserEmail =
             user.email;
 
-
-        // USER INFO
-
         userInfo.innerHTML = `
 
             <p>
-
-                Email:
-                ${user.email}
-
+                Email: ${user.email}
             </p>
 
         `;
-
-        // ADMIN USERS
 
         if (role === "admin") {
 
@@ -211,78 +185,70 @@ async function loadDashboard() {
 loadDashboard();
 
 
-
+// =========================
 // LOAD USERS
+// =========================
 
 async function loadUsers() {
 
     try {
 
-        const response = await fetch(
+        const response =
+            await fetch(
 
-            "https://aksupyq-backend.onrender.com/api/users",
+                "https://aksupyq-backend.onrender.com/api/users",
 
-            {
+                {
 
-                headers: {
+                    headers: {
 
-                    Authorization:
-                        `Bearer ${token}`
+                        Authorization:
+                            `Bearer ${token}`
+
+                    }
 
                 }
 
-            }
-
-        );
+            );
 
         const users =
             await response.json();
 
-        // CURRENT ADMIN EMAIL
-
-        const currentEmail =
-            currentUserEmail;
-
-
-        // SORT USERS
-
         users.sort((a, b) => {
 
-            // CURRENT ADMIN FIRST
+            // CURRENT USER FIRST
 
-            if (a.email === currentEmail) {
-
-                return -1;
-
-            }
-
-            if (b.email === currentEmail) {
-
-                return 1;
-
-            }
-
-
-            // OTHER ADMINS SECOND
-
-            if (a.role === "admin" && b.role !== "admin") {
+            if (a.email === currentUserEmail) {
 
                 return -1;
 
             }
 
-            if (a.role !== "admin" && b.role === "admin") {
+            if (b.email === currentUserEmail) {
 
                 return 1;
 
             }
 
+            // ADMINS SECOND
 
-            // SAME ROLE → SORT BY NAME
+            if (a.role === "admin" &&
+                b.role !== "admin") {
 
-            return a.name.localeCompare(
-                b.name
-            );
+                return -1;
+
+            }
+
+            if (a.role !== "admin" &&
+                b.role === "admin") {
+
+                return 1;
+
+            }
+
+            // NAME SORT
+
+            return a.name.localeCompare(b.name);
 
         });
 
@@ -299,21 +265,20 @@ async function loadUsers() {
 }
 
 
+// =========================
 // RENDER USERS
+// =========================
 
 function renderUsers(users) {
 
     managementContainer.innerHTML = "";
-
 
     if (users.length === 0) {
 
         managementContainer.innerHTML = `
 
             <p class="no-download">
-
                 No users found
-
             </p>
 
         `;
@@ -322,16 +287,18 @@ function renderUsers(users) {
 
     }
 
-
     users.forEach(user => {
+
+        const isProtected =
+            user.email === PROTECTED_ADMIN;
+
+        const isCurrentUser =
+            user.email === currentUserEmail;
 
         const userCard =
             document.createElement("div");
 
-        userCard.classList.add(
-            "user-card"
-        );
-
+        userCard.classList.add("user-card");
 
         userCard.innerHTML = `
 
@@ -339,15 +306,14 @@ function renderUsers(users) {
 
                 ${user.name}
 
-                ${user.email === currentUserEmail
+                ${isCurrentUser
 
-                ? `<span class="current-admin">
+                    ? `<span class="current-admin">
+                        YOU
+                       </span>`
 
-                    YOU
-
-                   </span>`
-
-                : ""}
+                    : ""
+                }
 
             </h2>
 
@@ -356,28 +322,27 @@ function renderUsers(users) {
             </p>
 
             <div class="role-badge">
-
                 ${user.role}
-
             </div>
 
-            <select>
+            <select
+                ${isProtected ? "disabled" : ""}>
 
                 <option
-                value="user"
-
-                ${user.role === "user"
-                ? "selected" : ""}>
+                    value="user"
+                    ${user.role === "user"
+                        ? "selected"
+                        : ""}>
 
                     user
 
                 </option>
 
                 <option
-                value="admin"
-
-                ${user.role === "admin"
-                ? "selected" : ""}>
+                    value="admin"
+                    ${user.role === "admin"
+                        ? "selected"
+                        : ""}>
 
                     admin
 
@@ -386,15 +351,11 @@ function renderUsers(users) {
             </select>
 
             <button
+                class="delete-btn"
 
-            class="delete-btn"
-
-            ${user.email === currentUserEmail ||
-                user.email === "singhompal3313@gmail.com"
-
-                ? "disabled"
-
-                : ""}>
+                ${isCurrentUser || isProtected
+                    ? "disabled"
+                    : ""}>
 
                 Delete User
 
@@ -402,13 +363,12 @@ function renderUsers(users) {
 
         `;
 
-
+        // =========================
         // CHANGE ROLE
+        // =========================
 
         const select =
-            userCard.querySelector(
-                "select"
-            );
+            userCard.querySelector("select");
 
         select.addEventListener(
 
@@ -417,46 +377,51 @@ function renderUsers(users) {
             () => {
 
                 changeRole(
+
                     user._id,
-                    select.value
+                    select.value,
+                    user.email
+
                 );
 
             }
 
         );
 
-
+        // =========================
         // DELETE USER
+        // =========================
 
-        userCard.querySelector(
-            ".delete-btn"
-        )
+        const deleteBtn =
+            userCard.querySelector(".delete-btn");
 
-            .addEventListener(
+        deleteBtn.addEventListener(
 
-                "click",
+            "click",
 
-                () => {
+            () => {
 
-                    deleteUser(
-                        user._id
-                    );
+                deleteUser(
 
-                }
+                    user._id,
+                    user.email
 
-            );
+                );
 
+            }
 
-        managementContainer.appendChild(
-            userCard
         );
+
+        managementContainer.appendChild(userCard);
 
     });
 
 }
 
 
+// =========================
 // SEARCH USERS
+// =========================
 
 if (userSearch) {
 
@@ -471,35 +436,28 @@ if (userSearch) {
                 userSearch.value
                     .toLowerCase();
 
-
             const filteredUsers =
 
                 allUsers.filter(user =>
 
                     user.name
                         .toLowerCase()
-
                         .includes(searchValue)
 
                     ||
 
                     user.email
                         .toLowerCase()
-
                         .includes(searchValue)
 
                 );
 
-
             managementContainer.style.opacity =
                 "0";
 
-
             setTimeout(() => {
 
-                renderUsers(
-                    filteredUsers
-                );
+                renderUsers(filteredUsers);
 
                 managementContainer.style.opacity =
                     "1";
@@ -513,39 +471,60 @@ if (userSearch) {
 }
 
 
+// =========================
 // CHANGE ROLE
+// =========================
 
-async function changeRole(id, roleValue) {
+async function changeRole(
+
+    id,
+    roleValue,
+    email
+
+) {
+
+    if (email === PROTECTED_ADMIN) {
+
+        showAlert(
+            "This admin role cannot be changed"
+        );
+
+        loadUsers();
+
+        return;
+
+    }
 
     try {
 
-        const response = await fetch(
+        const response =
+            await fetch(
 
-            `https://aksupyq-backend.onrender.com/api/users/role/${id}`,
+                `https://aksupyq-backend.onrender.com/api/users/role/${id}`,
 
-            {
+                {
 
-                method: "PUT",
+                    method: "PUT",
 
-                headers: {
+                    headers: {
 
-                    "Content-Type":
-                        "application/json",
+                        "Content-Type":
+                            "application/json",
 
-                    Authorization:
-                        `Bearer ${token}`
+                        Authorization:
+                            `Bearer ${token}`
 
-                },
+                    },
 
-                body: JSON.stringify({
+                    body: JSON.stringify({
 
-                    role: roleValue
+                        role: roleValue
 
-                })
+                    })
 
-            }
+                }
 
-        );
+            );
 
         const data =
             await response.json();
@@ -562,116 +541,124 @@ async function changeRole(id, roleValue) {
 
 }
 
+
+// =========================
 // DELETE USER
+// =========================
 
-function deleteUser(id) {
+function deleteUser(id, email) {
 
-    selectedUserId =
-        id;
+    if (email === PROTECTED_ADMIN) {
 
-    customPopup.classList.add(
-        "show"
-    );
+        showAlert(
+            "This admin cannot be deleted"
+        );
+
+        return;
+
+    }
+
+    selectedUserId = id;
+
+    customPopup.classList.add("show");
 
 }
+
+
+// =========================
+// ALERT
+// =========================
 
 function showAlert(message) {
 
     customAlert.innerText =
         message;
 
-    customAlert.classList.add(
-        "show"
-    );
+    customAlert.classList.add("show");
 
     setTimeout(() => {
 
-        customAlert.classList.remove(
-            "show"
-        );
+        customAlert.classList.remove("show");
 
     }, 1200);
 
 }
+
+
+// =========================
 // CONFIRM DELETE
+// =========================
 
-confirmDeleteBtn
+confirmDeleteBtn.addEventListener(
 
-    .addEventListener(
+    "click",
 
-        "click",
+    async () => {
 
-        async () => {
+        try {
 
-            try {
+            const response =
+                await fetch(
 
-                const response =
-                    await fetch(
+                    `https://aksupyq-backend.onrender.com/api/users/delete/${selectedUserId}`,
 
-                        `https://aksupyq-backend.onrender.com/api/users/delete/${selectedUserId}`,
+                    {
 
-                        {
+                        method: "DELETE",
 
-                            method: "DELETE",
+                        headers: {
 
-                            headers: {
-
-                                Authorization:
-                                    `Bearer ${token}`
-
-                            }
+                            Authorization:
+                                `Bearer ${token}`
 
                         }
 
-                    );
+                    }
 
-                const data =
-                    await response.json();
-
-                showAlert(
-                    data.message
                 );
 
-                customPopup.classList.remove(
-                    "show"
-                );
+            const data =
+                await response.json();
 
-                loadUsers();
+            showAlert(data.message);
 
-            } catch (error) {
+            customPopup.classList.remove("show");
 
-                console.log(error);
+            loadUsers();
 
-            }
+        } catch (error) {
+
+            console.log(error);
 
         }
 
-    );
+    }
 
+);
+
+
+// =========================
 // CANCEL DELETE
+// =========================
 
-cancelDeleteBtn
+cancelDeleteBtn.addEventListener(
 
-    .addEventListener(
+    "click",
 
-        "click",
+    () => {
 
-        () => {
+        customPopup.classList.remove("show");
 
-            customPopup.classList.remove(
-                "show"
-            );
+    }
 
-        }
-
-    );
+);
 
 
+// =========================
 // LOGOUT
+// =========================
 
-document.getElementById(
-    "logoutbtn"
-)
+document.getElementById("logoutbtn")
 
     .addEventListener(
 

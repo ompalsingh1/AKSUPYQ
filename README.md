@@ -18,6 +18,16 @@ The platform provides a structured Branch → Subject → Papers hierarchy while
 
 ---
 
+## 🏗️ Project Architecture
+
+Frontend (Netlify)
+↓
+Backend API (Render)
+↓
+MongoDB Atlas Database
+
+
+
 ## 🔥 Features
 
 ### 👨‍🎓 User Features
@@ -78,15 +88,15 @@ The platform provides a structured Branch → Subject → Papers hierarchy while
 ## 📸 Screenshots
 
 ### Home Page
-![Home Page](screenshots/home.png)
+![Home Page](assets/home.png)
 
 ### Admin Dashboard
 
-![Dashboard](screenshots/dashboard.png)
+![Dashboard](assets/dashboard.png)
 
 ### Papers Page
 
-![Papers](screenshots/pyq.png)
+![Papers](assets/pyq.png)
 
 ---
 

@@ -45,6 +45,7 @@ const customAlert =
 
 
 let selectedPaperId = null;
+let isEditing = false;
 
 
 // MODAL ELEMENTS
@@ -88,9 +89,9 @@ async function loadPapers() {
 
         const papers =
             await response.json();
-        // SORT PAPERS DESCENDING BY YEAR
+        // SORT PAPERS DESCENDING BY SEMESTER
 
-        papers.sort((a, b) => b.year - a.year);
+        papers.sort((a, b) => b.semester - a.semester);
 
         paperContainer.innerHTML = "";
 
@@ -114,7 +115,7 @@ async function loadPapers() {
                 </h3>
 
                 <p>
-                    Year : ${paper.year}
+                    Semester : ${paper.semester}
                 </p>
 
                 <div class="paper-buttons">
@@ -130,6 +131,13 @@ async function loadPapers() {
                     ?
 
                     `
+                        <button
+                        class="edit-btn">
+
+                            Edit
+
+                        </button>
+
 
                         <button
                         class="delete-btn">
@@ -169,7 +177,7 @@ async function loadPapers() {
                             {
 
                                 headers: {
-                                    Authorization: token
+                                    Authorization: `Bearer ${token}`
                                 }
 
                             }
@@ -234,6 +242,48 @@ async function loadPapers() {
 
             }
 
+            // EDIT PAPER
+
+            if (role === "admin") {
+
+                paperCard.querySelector(
+                    ".edit-btn"
+                )
+
+                    .addEventListener("click", () => {
+
+                        isEditing = true;
+
+                        selectedPaperId =
+                            paper._id;
+
+                        document.getElementById(
+                            "paperName"
+                        ).value =
+                            paper.paperName;
+
+                        document.getElementById(
+                            "semester"
+                        ).value =
+                            paper.semester;
+
+                        document.getElementById(
+                            "modalTitle"
+                        ).innerText =
+                            "Edit Paper";
+
+                        document.getElementById(
+                            "submitPaperBtn"
+                        ).innerText =
+                            "Update Paper";
+
+                        uploadModal.style.display =
+                            "flex";
+
+                    });
+
+            }
+
 
             paperContainer.appendChild(
                 paperCard
@@ -270,6 +320,20 @@ async function loadPapers() {
 
 
             uploadCard.addEventListener("click", () => {
+
+                isEditing = false;
+
+                uploadForm.reset();
+
+                document.getElementById(
+                    "modalTitle"
+                ).innerText =
+                    "Upload Paper";
+
+                document.getElementById(
+                    "submitPaperBtn"
+                ).innerText =
+                    "Upload Paper";
 
                 uploadModal.style.display =
                     "flex";
@@ -334,10 +398,10 @@ uploadForm.addEventListener(
 
         formData.append(
 
-            "year",
+            "semester",
 
             document.getElementById(
-                "year"
+                "semester"
             ).value
 
         );
@@ -349,37 +413,90 @@ uploadForm.addEventListener(
         );
 
 
-        formData.append(
-
-            "pdf",
-
+        const pdfFile =
             document.getElementById(
                 "pdfFile"
-            ).files[0]
+            ).files[0];
 
-        );
+        if (pdfFile) {
+
+            formData.append(
+
+                "pdf",
+
+                pdfFile
+
+            );
+
+        }
 
 
         try {
 
-            const response = await fetch(
+            let response;
 
-                "https://aksupyq-backend.onrender.com/api/papers/upload",
+            if (isEditing) {
 
-                {
+                response = await fetch(
 
-                    method: "POST",
+                    `https://aksupyq-backend.onrender.com/api/papers/edit/${selectedPaperId}`,
 
-                    headers: {
-                        Authorization:
-                            `Bearer ${token}`
-                    },
+                    {
 
-                    body: formData
+                        method: "PUT",
 
-                }
+                        headers: {
 
-            );
+                            Authorization:
+                                `Bearer ${token}`,
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            paperName:
+                                document.getElementById(
+                                    "paperName"
+                                ).value,
+
+                            semester:
+                                document.getElementById(
+                                    "semester"
+                                ).value
+
+                        })
+
+                    }
+
+                );
+
+            } else {
+
+                response = await fetch(
+
+                    "https://aksupyq-backend.onrender.com/api/papers/upload",
+
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            Authorization:
+                                `Bearer ${token}`
+
+                        },
+
+                        body: formData
+
+                    }
+
+                );
+
+            }
 
             const data =
                 await response.json();
@@ -390,6 +507,8 @@ uploadForm.addEventListener(
                 "none";
 
             uploadForm.reset();
+
+            isEditing = false;
 
             loadPapers();
 

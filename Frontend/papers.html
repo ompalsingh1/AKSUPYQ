@@ -58,17 +58,19 @@
 
                 </span>
 
-                <h2>Upload Paper</h2>
+                <h2 id="modalTitle">
+                    Upload Paper
+                </h2>
 
                 <form id="uploadForm">
 
                     <input type="text" id="paperName" placeholder="Paper Name" required>
 
-                    <input type="text" id="year" placeholder="Year" required>
+                    <input type="text" id="semester" placeholder="Semester" required>
 
-                    <input type="file" id="pdfFile" accept=".pdf" required>
+                    <input type="file" id="pdfFile" accept=".pdf">
 
-                    <button type="submit">
+                    <button id="submitPaperBtn" type="submit">
                         Upload Paper
                     </button>
 

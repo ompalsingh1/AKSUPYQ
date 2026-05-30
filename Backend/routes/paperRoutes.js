@@ -48,14 +48,14 @@ router.post(
 
             const {
                 paperName,
-                year,
+                semester,
                 subjectId
             } = req.body;
 
             const newPaper = new Paper({
 
                 paperName,
-                year,
+                semester,
 
                 pdfFile: req.file.path,
 
@@ -154,6 +154,75 @@ router.get(
         }
 
     }
+);
+
+// EDIT PAPER
+
+router.put(
+
+    "/edit/:paperId",
+
+    authMiddleware,
+    adminMiddleware,
+
+    async (req, res) => {
+
+        try {
+
+            const {
+                paperName,
+                semester
+            } = req.body;
+
+            const paper =
+            await Paper.findByIdAndUpdate(
+
+                req.params.paperId,
+
+                {
+                    paperName,
+                    semester
+                },
+
+                {
+                    new: true
+                }
+
+            );
+
+            if(!paper){
+
+                return res.status(404).json({
+
+                    message:
+                    "Paper not found"
+
+                });
+
+            }
+
+            res.status(200).json({
+
+                message:
+                "Paper updated successfully",
+
+                paper
+
+            });
+
+        } catch(error){
+
+            res.status(500).json({
+
+                error:
+                error.message
+
+            });
+
+        }
+
+    }
+
 );
 
 // DELETE PAPER

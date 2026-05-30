@@ -39,6 +39,7 @@
 }
 
 .download-btn,
+.edit-btn,
 .delete-btn{
 
     padding: 10px 15px;
@@ -57,6 +58,13 @@
     background: cyan;
 
     color: black;
+}
+
+.edit-btn{
+
+    background: orange;
+
+    color: white;
 }
 
 .delete-btn{

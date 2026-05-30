@@ -631,3 +631,22 @@ body{
 
     border-radius: 10px;
 }
+
+.footer{
+
+    width: 100%;
+
+    text-align: center;
+
+    padding: 20px;
+
+    margin-top: 50px;
+
+    background: black;
+
+    color: white;
+
+    border-top: 1px solid cyan;
+
+    box-shadow: 0 0 10px rgba(0,255,255,0.3);
+}

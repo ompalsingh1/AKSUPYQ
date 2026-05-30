@@ -12,9 +12,23 @@ html{
 }
 
 body{
+
     background: #ffffff;
+
     color: rgb(0, 0, 0);
+
     overflow-x: hidden;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.content{
+
+    flex: 1;
 }
 
 
@@ -639,8 +653,6 @@ body{
     text-align: center;
 
     padding: 20px;
-
-    margin-top: 50px;
 
     background: black;
 

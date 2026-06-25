@@ -88,46 +88,33 @@ router.post(
 
 router.get(
     "/download/:paperId",
+
     authMiddleware,
+
     async (req, res) => {
 
         try {
 
-            console.log("Requested Paper ID:", req.params.paperId);
-
-            const paper = await Paper.findById(req.params.paperId);
-
-            console.log("Paper:", paper);
+            const paper = await Paper.findById(
+                req.params.paperId
+            );
 
             if(!paper){
 
                 return res.status(404).json({
-                    message: "Paper not found in database"
+                    message: "Paper not found"
                 });
 
             }
 
-            console.log("PDF Path:", paper.pdfFile);
-
-            console.log(
-                "File Exists:",
-                fs.existsSync(paper.pdfFile)
-            );
-
-            if(!fs.existsSync(paper.pdfFile)){
-
-                return res.status(404).json({
-                    message: "PDF file not found on server"
-                });
-
-            }
+            // SAVE DOWNLOAD HISTORY
 
             await User.findByIdAndUpdate(
 
                 req.user.id,
 
                 {
-                    $push:{
+                    $push: {
                         downloads: paper._id
                     }
                 }
@@ -138,10 +125,8 @@ router.get(
 
         } catch(error){
 
-            console.log(error);
-
             res.status(500).json({
-                error:error.message
+                error: error.message
             });
 
         }

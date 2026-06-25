@@ -7,7 +7,7 @@ const paperSchema = new mongoose.Schema({
         required: true
     },
 
-    semester: {
+    year: {
         type: String,
         required: true
     },

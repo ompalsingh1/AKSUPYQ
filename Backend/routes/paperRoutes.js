@@ -48,14 +48,14 @@ router.post(
 
             const {
                 paperName,
-                semester,
+                year,
                 subjectId
             } = req.body;
 
             const newPaper = new Paper({
 
                 paperName,
-                semester,
+                year,
 
                 pdfFile: req.file.path,
 
@@ -171,7 +171,7 @@ router.put(
 
             const {
                 paperName,
-                semester
+                year
             } = req.body;
 
             const paper =
@@ -181,7 +181,7 @@ router.put(
 
                 {
                     paperName,
-                    semester
+                    year
                 },
 
                 {

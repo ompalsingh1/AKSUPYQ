@@ -89,9 +89,9 @@ async function loadPapers() {
 
         const papers =
             await response.json();
-        // SORT PAPERS DESCENDING BY SEMESTER
+        // SORT PAPERS DESCENDING BY YEAR
 
-        papers.sort((a, b) => b.semester - a.semester);
+        papers.sort((a, b) => b.year - a.year);
 
         paperContainer.innerHTML = "";
 
@@ -115,7 +115,7 @@ async function loadPapers() {
                 </h3>
 
                 <p>
-                    Semester : ${paper.semester}
+                    Year : ${paper.year}
                 </p>
 
                 <div class="paper-buttons">
@@ -263,9 +263,9 @@ async function loadPapers() {
                             paper.paperName;
 
                         document.getElementById(
-                            "semester"
+                            "year"
                         ).value =
-                            paper.semester;
+                            paper.year;
 
                         document.getElementById(
                             "modalTitle"
@@ -398,10 +398,10 @@ uploadForm.addEventListener(
 
         formData.append(
 
-            "semester",
+            "year",
 
             document.getElementById(
-                "semester"
+                "year"
             ).value
 
         );
@@ -462,9 +462,9 @@ uploadForm.addEventListener(
                                     "paperName"
                                 ).value,
 
-                            semester:
+                            year:
                                 document.getElementById(
-                                    "semester"
+                                    "year"
                                 ).value
 
                         })

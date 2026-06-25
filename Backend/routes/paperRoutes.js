@@ -84,6 +84,71 @@ router.post(
 );
 
 
+// DOWNLOAD PAPER
+
+router.get(
+    "/download/:paperId",
+    authMiddleware,
+    async (req, res) => {
+
+        try {
+
+            console.log("Requested Paper ID:", req.params.paperId);
+
+            const paper = await Paper.findById(req.params.paperId);
+
+            console.log("Paper:", paper);
+
+            if(!paper){
+
+                return res.status(404).json({
+                    message: "Paper not found in database"
+                });
+
+            }
+
+            console.log("PDF Path:", paper.pdfFile);
+
+            console.log(
+                "File Exists:",
+                fs.existsSync(paper.pdfFile)
+            );
+
+            if(!fs.existsSync(paper.pdfFile)){
+
+                return res.status(404).json({
+                    message: "PDF file not found on server"
+                });
+
+            }
+
+            await User.findByIdAndUpdate(
+
+                req.user.id,
+
+                {
+                    $push:{
+                        downloads: paper._id
+                    }
+                }
+
+            );
+
+            res.download(paper.pdfFile);
+
+        } catch(error){
+
+            console.log(error);
+
+            res.status(500).json({
+                error:error.message
+            });
+
+        }
+
+    }
+);
+
 // GET PAPERS BY SUBJECT
 
 router.get("/:subjectId", async (req, res) => {
@@ -105,56 +170,6 @@ router.get("/:subjectId", async (req, res) => {
     }
 
 });
-
-// DOWNLOAD PAPER
-
-router.get(
-    "/download/:paperId",
-
-    authMiddleware,
-
-    async (req, res) => {
-
-        try {
-
-            const paper = await Paper.findById(
-                req.params.paperId
-            );
-
-            if(!paper){
-
-                return res.status(404).json({
-                    message: "Paper not found"
-                });
-
-            }
-
-            // SAVE DOWNLOAD HISTORY
-
-            await User.findByIdAndUpdate(
-
-                req.user.id,
-
-                {
-                    $push: {
-                        downloads: paper._id
-                    }
-                }
-
-            );
-
-            res.download(paper.pdfFile);
-
-        } catch(error){
-
-            res.status(500).json({
-                error: error.message
-            });
-
-        }
-
-    }
-);
 
 // EDIT PAPER
 

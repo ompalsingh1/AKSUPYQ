@@ -263,6 +263,28 @@
 
 }
 
+.empty-state{
+    width: 100%;
+    padding: 40px;
+    margin-top: 20px;
+    text-align: center;
+    border: 2px dashed #d6d6d6;
+    border-radius: 12px;
+    background: #f8f9fa;
+    color: #666;
+}
+
+.empty-state h3{
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 24px;
+}
+
+.empty-state p{
+    margin: 0;
+    font-size: 16px;
+}
+
 
 .solve-query{
 

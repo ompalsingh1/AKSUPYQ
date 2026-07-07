@@ -1,22 +1,22 @@
 const token =
-localStorage.getItem(
-    "token"
-);
+    localStorage.getItem(
+        "token"
+    );
 
 const role =
-localStorage.getItem("role");
+    localStorage.getItem("role");
 
 const adminBadge =
-document.getElementById("adminBadge");
+    document.getElementById("adminBadge");
 
-if(role === "admin" && adminBadge){
+if (role === "admin" && adminBadge) {
 
     adminBadge.innerText =
-    "(ADMIN)";
+        "(ADMIN)";
 
 }
 
-async function loadSolvedQueries(){
+async function loadSolvedQueries() {
 
     try {
 
@@ -29,7 +29,7 @@ async function loadSolvedQueries(){
                 headers: {
 
                     Authorization:
-                    `Bearer ${token}`
+                        `Bearer ${token}`
 
                 }
 
@@ -38,28 +38,34 @@ async function loadSolvedQueries(){
         );
 
         const queries =
-        await response.json();
+            await response.json();
 
         const queryContainer =
-        document.getElementById(
-            "queryContainer"
-        );
+            document.getElementById(
+                "queryContainer"
+            );
 
         queryContainer.innerHTML = "";
 
 
-        queries
+        const solvedQueries = queries.filter(query => query.isSolved);
 
-        .filter(query =>
+        if (solvedQueries.length === 0) {
 
-            query.isSolved
+            queryContainer.innerHTML = `
+        <div class="empty-state">
+            <h3>No Solved Queries</h3>
+            <p>There are no solved queries yet.</p>
+        </div>
+    `;
 
-        )
+            return;
+        }
 
-        .forEach(query => {
+        solvedQueries.forEach(query => {
 
             const queryCard =
-            document.createElement("div");
+                document.createElement("div");
 
             queryCard.classList.add(
                 "query-card"
@@ -87,7 +93,7 @@ async function loadSolvedQueries(){
 
         });
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
 
@@ -101,11 +107,11 @@ loadSolvedQueries();
 
 document.getElementById("logoutbtn")
 
-.addEventListener("click", () => {
+    .addEventListener("click", () => {
 
-    localStorage.clear();
+        localStorage.clear();
 
-    window.location.href =
-    "login.html";
+        window.location.href =
+            "login.html";
 
-});
+    });

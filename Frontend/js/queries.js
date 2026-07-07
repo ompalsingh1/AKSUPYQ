@@ -5,9 +5,9 @@ const role =
     localStorage.getItem("role");
 
 const customAlert =
-document.getElementById(
-    "customAlert"
-);
+    document.getElementById(
+        "customAlert"
+    );
 
 
 const adminBadge =
@@ -33,21 +33,21 @@ if (role === "admin" && querySection) {
 }
 
 const solvedQueriesBtn =
-document.getElementById(
-    "solvedQueriesBtn"
-);
+    document.getElementById(
+        "solvedQueriesBtn"
+    );
 
-if(role !== "admin" && solvedQueriesBtn){
+if (role !== "admin" && solvedQueriesBtn) {
 
     solvedQueriesBtn.style.display =
-    "none";
+        "none";
 
 }
 
-function showAlert(message){
+function showAlert(message) {
 
     customAlert.innerText =
-    message;
+        message;
 
     customAlert.classList.add(
         "show"
@@ -153,10 +153,10 @@ async function loadQueries() {
 
         // ADMIN
 
-        if(role === "admin"){
+        if (role === "admin") {
 
             apiUrl =
-            "https://aksupyq-backend.onrender.com/api/queries/all";
+                "https://aksupyq-backend.onrender.com/api/queries/all";
 
         }
 
@@ -165,7 +165,7 @@ async function loadQueries() {
         else {
 
             apiUrl =
-            "https://aksupyq-backend.onrender.com/api/queries/myqueries";
+                "https://aksupyq-backend.onrender.com/api/queries/myqueries";
 
         }
 
@@ -179,7 +179,7 @@ async function loadQueries() {
                 headers: {
 
                     Authorization:
-                    `Bearer ${token}`
+                        `Bearer ${token}`
 
                 }
 
@@ -188,32 +188,38 @@ async function loadQueries() {
         );
 
         const queries =
-        await response.json();
+            await response.json();
 
         const queryContainer =
-        document.getElementById(
-            "queryContainer"
-        );
+            document.getElementById(
+                "queryContainer"
+            );
 
         queryContainer.innerHTML = "";
 
 
         // ADMIN VIEW
 
-        if(role === "admin"){
+        if (role === "admin") {
 
-            queries
+            const UnsolvedQueries = queries.filter(query => !query.isSolved);
 
-            .filter(query =>
+            if (UnsolvedQueries.length === 0) {
+                queryContainer.innerHTML = `
+        <div class="empty-state">
+            <h3>No Pending Queries</h3>
+            <p>All user queries have been solved.</p>
+        </div>
+    `;
+                return;
+            }
 
-                !query.isSolved
 
-            )
 
-            .forEach(query => {
+            UnsolvedQueries.forEach(query => {
 
                 const queryCard =
-                document.createElement("div");
+                    document.createElement("div");
 
                 queryCard.classList.add(
                     "query-card"
@@ -256,19 +262,19 @@ async function loadQueries() {
                     ".delete-query"
                 )
 
-                .addEventListener(
+                    .addEventListener(
 
-                    "click",
+                        "click",
 
-                    () => {
+                        () => {
 
-                        deleteQuery(
-                            query._id
-                        );
+                            deleteQuery(
+                                query._id
+                            );
 
-                    }
+                        }
 
-                );
+                    );
 
 
                 // SOLVE
@@ -277,19 +283,19 @@ async function loadQueries() {
                     ".solve-query"
                 )
 
-                .addEventListener(
+                    .addEventListener(
 
-                    "click",
+                        "click",
 
-                    () => {
+                        () => {
 
-                        solveQuery(
-                            query._id
-                        );
+                            solveQuery(
+                                query._id
+                            );
 
-                    }
+                        }
 
-                );
+                    );
 
 
                 queryContainer.appendChild(
@@ -305,10 +311,20 @@ async function loadQueries() {
 
         else {
 
+            if (queries.length === 0) {
+                queryContainer.innerHTML = `
+        <div class="empty-state">
+            <h3>No Queries Yet</h3>
+            <p>You haven't submitted any queries yet.</p>
+        </div>
+    `;
+                return;
+            }
+
             queries.forEach(query => {
 
                 const queryCard =
-                document.createElement("div");
+                    document.createElement("div");
 
                 queryCard.classList.add(
                     "query-card"
@@ -317,7 +333,7 @@ async function loadQueries() {
 
                 // SOLVED
 
-                if(query.isSolved){
+                if (query.isSolved) {
 
                     queryCard.classList.add(
                         "solved-query-card"
@@ -362,7 +378,7 @@ async function loadQueries() {
 
         }
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
 
@@ -370,7 +386,7 @@ async function loadQueries() {
 
 }
 
-loadQueries();  
+loadQueries();
 
 
 // DELETE QUERY
@@ -413,7 +429,7 @@ async function deleteQuery(queryId) {
 
 // SOLVE QUERY
 
-async function solveQuery(queryId){
+async function solveQuery(queryId) {
 
     try {
 
@@ -428,7 +444,7 @@ async function solveQuery(queryId){
                 headers: {
 
                     Authorization:
-                    `Bearer ${token}`
+                        `Bearer ${token}`
 
                 }
 
@@ -437,13 +453,13 @@ async function solveQuery(queryId){
         );
 
         const data =
-        await response.json();
+            await response.json();
 
         showAlert(data.message);
 
         loadQueries();
 
-    } catch(error){
+    } catch (error) {
 
         console.log(error);
 
